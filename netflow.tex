@@ -115,205 +115,185 @@
 
 
 	\frame{
-	\frametitle{Cache Maintainence Problem}
-	\begin{definition}
-		We have a set U of \ccp{n} pieces of data stored in main memory and 
-		a cache which can hold \ccp{k (k<n)} items.
-		Given a visiting sequence of data items \ccp{D ($d_1, d_2, d_3 ... d_m$)} from \ccp{U},
-		\ccb{a eviction schedule} to determain which items should be evicted from the cache at which points 
-		in the sequence. 
-	\end{definition}
-	
-	\centerline{\includegraphics[width=0.7\textwidth]{figures/p5}}
-}
+		\frametitle{Cache Maintainence Problem}
+		\begin{definition}
+			We have a set U of \ccp{n} pieces of data stored in main memory and 
+			a cache which can hold \ccp{k (k<n)} items.
+			Given a visiting sequence of data items \ccp{D ($d_1, d_2, d_3 ... d_m$)} from \ccp{U},
+			\ccb{a eviction schedule} to determain which items should be evicted from the cache at which points 
+			in the sequence. 
+		\end{definition}
+		\vspace{5mm}
+		\centerline{\includegraphics[width=0.7\textwidth]{wsw-pic/cmp.png}}
+	}
 	%%//////////////////////////////////////////////////////////////////////////////////////////////%%6
 
 	\frame{
-	\frametitle{Cache Maintainence Problem}
-	
-	\cco{Cache Maintainence Problem.} 
-	Find an eviction schedule which makes the least number of cache misses.\bigskip\bigskip
+		\frametitle{Cache Maintainence Problem}
+		
+		\cco{Cache Maintainence Problem.} 
+		Find an eviction schedule which makes the least number of cache misses.\bigskip\bigskip
 
-	\centerline{\includegraphics[width=0.6\textwidth]{figures/p6}}
-}
-
-	
-%%//////////////////////////////////////////////////////////////////////////////////////////////%%7
-
-
-
-		\frame{
-		\frametitle{Quiz 1}
-	Which is the capacity of the given $st$-cut?
-\begin{enumerate}[\color{blue} A.]
-	\item $11~ (20+25 - 8 - 11 - 9 - 6)$
-	\item $34 ~(8+11+9+6)$
-	\item $45~ (20+ 25)$
-	\item $79~	(20+ 25+ 8+ 11+ 9+ 6)$
-\end{enumerate}	
-\vspace{5mm}
-	
-	\centerline{\includegraphics[width=0.8\textwidth]{figures/p7}}
-	
-}
-	
-	
-	
-	%%//////////////////////////////////////////////////////////////////////////////////////////////%%8
-	\frame{
-		\frametitle{Maximum-flow problem}
-	\begin{definition}
-		An \ccp{$st$-flow(flow)} \ccb{$f$} is a function that satisfies:
-		\begin{itemize}
-			\item For each \ccb{$e\in E$}: \hspace{2mm}  \ccb{$0 \leq f(e) \leq c(e)$}
-			\item For each \ccb{$v\in V-\{s,t\}$}:  \ccb{$\sum\limits_{e \text { in to } v} f(e) \  =\sum\limits_{e \text { out of } v} f(e)$}
-		\end{itemize}
-	\end{definition}
-	\bigskip
-
-	\centerline{\includegraphics[width=0.8\textwidth]{figures/p8}}
+		\centerline{\includegraphics[width=0.6\textwidth]{wsw-pic/bestsche.png}}
 	}
+
 	
-	%%//////////////////////////////////////////////////////////////////////////////////////////////%%9
+	%%//////////////////////////////////////////////////////////////////////////////////////////////%%7
 	\frame{
-		\frametitle{Maximum-flow problem}
+		\frametitle{Cache Maintainence Problem}
 		\begin{definition}
-		An \ccp{$st$-flow(flow)} \ccb{$f$} is a function that satisfies:
-		\begin{itemize}
-			\item For each \ccb{$e\in E$}: \hspace{2mm}  \ccb{$0 \leq f(e) \leq c(e)$}
-			\item For each \ccb{$v\in V-\{s,t\}$}:  \ccb{$\sum\limits_{e \text { in to } v} f(e) \  =\sum\limits_{e \text { out of } v} f(e)$}
-		\end{itemize}
-	\end{definition}
-		\begin{definition}
-		The \ccp{value}	of a flow \ccb{$f$} is: \ccb{$val(f)=\sum\limits_{e \text { out of } s} f(e)-\sum\limits_{e \text { in to } s} f(e)$}
-		\end{definition}\smallskip
-	
-	\centerline{\includegraphics[width=0.7\textwidth]{figures/p9}}
+			A \ccp{Cache Maintainence Problem} can be divided into to different cases:
+			\begin{itemize}
+				\item \ccb{case one}: the eviction schedule are able to know the coming sequence.
+				\item \ccb{case two}: the eviction schedule has to determine without knowledge of what’s coming in the future.
+			\end{itemize}
+		\end{definition}
+		\bigskip
 	}
-	
-	
-%%////////////////////////////////////////////////////////////////////////////////////////////%%10
-	\frame{
-	\frametitle{Maximum-flow problem}
-	
-    \cco{Max-flow problem.} Find a flow of maximum value.\bigskip\bigskip
+	%%//////////////////////////////////////////////////////////////////////////////////////////////%%7
 
 
-	\centerline{\includegraphics[width=0.7\textwidth]{figures/p10}}
-}
-
-
-\section{Ford-Fulkerson Algorithm}
+\section{Farthest-in-Future Algorithm}
 	%
 	%%//////////////////////////////////////////////////////////////////////////////////////////////%%12
 	\frame{
-		\frametitle{Toward a max-flow algorithm}
-	\ccp{Greedy algorithm.}
-	\vspace{-4mm}
+		\frametitle{Farthest-in-Future Algorithm}
+		\ccp{Farthest-in-Future Algorithm}
+		\vspace{-4mm}
 		\begin{itemize}
-			\item Start with \ccb{$f (e) = 0$} for each edge \ccb{$e \in E$}.
-		\ccg{	\item Find an $s\rightsquigarrow t$ path $P$ where each edge has $f (e) < c(e)$.
-			\item Augment flow along path $P$.
-			\item  Repeat until you get stuck.}
+				\item It is the optimal solution 
+						in \ccb{case one} of \ccp{Cache Maintainence Problem}
+				\item It is a kind of greedy algorithm.
+				\item It is proposed by Les Belady in 1960s
 		\end{itemize}\vspace{5mm}
-	
-	 	\centerline{\includegraphics[width=\textwidth]{figures/p12}}
 	}
 	%
 	%%//////////////////////////////////////////////////////////////////////////////////////////////%%13
 
-\frame{
-	\frametitle{Toward a max-flow algorithm}
-	\ccp{Greedy algorithm.}
-	\vspace{-4mm}
-	\begin{itemize}
-		\ccg{	\item Start with $f (e) = 0$ for each edge $e \in E$.}
-		\item Find an \ccb{$s\rightsquigarrow t$} path \ccb{$P$} where each edge has \ccb{$f (e) < c(e)$}.
-		\ccg{	\item Augment flow along path $P$.
-			\item  Repeat until you get stuck.}
-	\end{itemize}\vspace{5mm}
-	
-		\centerline{\includegraphics[width=\textwidth]{figures/p13}}
-}
+	\frame{
+		\frametitle{Farthest-in-Future Algorithm}
+		\ccp{Farthest-in-Future Algorithm.}
+		\vspace{-4mm}
+		\begin{itemize}
+			\item  When \ccb{$d_i$} is in the cache, evict nothing
+			\item  When \ccb{$d_i$} is not in the cache and needs to be brought into the cache evict the item that 
+			is needed the farthest into the future
+
+		\end{itemize}\vspace{5mm}
+		
+	}
 	%
 	%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%14
 	%
-\frame{
-	\frametitle{Toward a max-flow algorithm}
-	\ccp{Greedy algorithm.}
-	\vspace{-4mm}
-	\begin{itemize}
-		\ccg{	\item Start with $f (e) = 0$ for each edge $e \in E$.
-		\item Find an $s\rightsquigarrow t$ path $P$ where each edge has $f (e) < c(e)$.}
-		\item Augment flow along path \ccb{$P$}.
-		\ccg{	\item  Repeat until you get stuck.}
-	\end{itemize}\vspace{5mm}
-	
-		\centerline{\includegraphics[width=\textwidth]{figures/p14}}
-}
+	\frame{
+		\frametitle{Farthest-in-Future Algorithm}
+		\ccp{Farthest-in-Future Algorithm.}
+		\vspace{-4mm}
+		\begin{itemize}
+			\item Cache initialize with two item \ccp{A} and \ccp{B}
+			\item In step 1 and step 2, data requested are already in cache, no eviction occurs
+			\ccg{ \item In step 3, item C is requested but not in the cache. C is brought to cache from memory.
+				To make room for C, algorithm evict Item B which is needed the farthest into the future}
+			\ccg{ \item In step 4,  item A is already in cache, no eviction occurs}
+			\ccg{ \item In step 5,  Item A is evicted for Item B}
+			\ccg{ \item In step 6 and step 7,  data requested are already in cache, no eviction occurs}
+			\ccg{ \item In step 8,  Item C is evicted for Item A}
+		\end{itemize}
+		\vspace{4mm}
+		\centerline{\includegraphics[width=0.52\textwidth]{wsw-pic/ff1}}
+	}
 	%%%//////////////////////////////////////////////////////////////////////////////////////////////%%15
-	
-\frame{
-	\frametitle{Toward a max-flow algorithm}
-	\ccp{Greedy algorithm.}
-	\vspace{-4mm}
-	\begin{itemize}
-		\ccg{	\item Start with $f (e) = 0$ for each edge $e \in E$.
-			\item Find an $s\rightsquigarrow t$ path $P$ where each edge has $f (e) < c(e)$.
-		\item Augment flow along path $P$.}
-			\item  Repeat until you get stuck.
-	\end{itemize}\vspace{3mm}
-	
-		\centerline{\includegraphics[width=\textwidth]{figures/p15}}
-}
-	%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%16
-   \frame{
-	\frametitle{Toward a max-flow algorithm}
-	\ccp{Greedy algorithm.}
-	\vspace{-4mm}
-	\begin{itemize}
-		\ccg{\item Start with $f (e) = 0$ for each edge $e \in E$.
-			\item Find an $s\rightsquigarrow t$ path $P$ where each edge has $f (e) < c(e)$.
-			\item Augment flow along path $P$.}
-		\item  Repeat until you get stuck.
-	\end{itemize}\vspace{5mm}
+	\frame{
+		\frametitle{Farthest-in-Future Algorithm}
+		\ccp{Farthest-in-Future Algorithm.}
+		\vspace{-4mm}
+		\begin{itemize}
+			\ccg{\item Cache initialize with two item A and B}
+			\ccg{\item In step 1 and step 2, data requested are already in cache, no eviction occurs}
+			\item In step 3, item \ccp{C} is requested but not in the cache. \ccp{C} is brought to cache from memory.
+				To make room for \ccp{C}, algorithm evict Item \ccp{B} which is needed the farthest into the future
+			\ccg{ \item In step 4,  item A is already in cache, no eviction occurs}
+			\ccg{ \item In step 5,  Item A is evicted for Item B}
+			\ccg{ \item In step 6 and step 7,  data requested are already in cache, no eviction occurs}
+			\ccg{ \item In step 8,  Item C is evicted for Item A}
+		\end{itemize}
+		\vspace{4mm}
+		\centerline{\includegraphics[width=0.52\textwidth]{wsw-pic/ff2}}
+	}
+%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%19
+	\frame{
+		\frametitle{Farthest-in-Future Algorithm}
+		\ccp{Farthest-in-Future Algorithm.}
+		\vspace{-4mm}
+		\begin{itemize}
+			\ccg{\item Cache initialize with two item A and B}
+			\ccg{\item In step 1 and step 2, data requested are already in cache, no eviction occurs}
+			\ccg{\item In step 3, item C is requested but not in the cache. C is brought to cache from memory.
+				To make room for C, algorithm evict Item B which is needed the farthest into the future}
+			\item In step 4,  item \ccp{A} is already in cache, no eviction occurs
+			\ccg{ \item In step 5,  Item A is evicted for Item B}
+			\ccg{ \item In step 6 and step 7,  data requested are already in cache, no eviction occurs}
+			\ccg{ \item In step 8,  Item C is evicted for Item A}
+		\end{itemize}
+		\vspace{4mm}
+		\centerline{\includegraphics[width=0.52\textwidth]{wsw-pic/ff3}}
+	}
+%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%19
 
+	\frame{
+		\frametitle{Farthest-in-Future Algorithm}
+		\ccp{Farthest-in-Future Algorithm.}
+		\vspace{-4mm}
+		\begin{itemize}
+			\ccg{\item Cache initialize with two item A and B}
+			\ccg{\item In step 1 and step 2, data requested are already in cache, no eviction occurs}
+			\ccg{\item In step 3, item C is requested but not in the cache. C is brought to cache from memory
+				To make room for C, algorithm evict Item B which is needed the farthest into the future}
+			\ccg{ \item In step 4,  item A is already in cache, no eviction occurs}
+			\item In step 5,  Item \ccp{A} is evicted for Item \ccp{B}
+			\ccg{ \item In step 6 and step 7,  data requested are already in cache, no eviction occurs}
+			\ccg{ \item In step 8,  Item C is evicted for Item A}
+		\end{itemize}
+		\vspace{4mm}
+		\centerline{\includegraphics[width=0.52\textwidth]{wsw-pic/ff4}}
+	}
+%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%19
 	
-		\centerline{\includegraphics[width=\textwidth]{figures/p16}}
-}
-	%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%17
-\frame{
-	\frametitle{Toward a max-flow algorithm}
-	\ccp{Greedy algorithm.}
-	\vspace{-4mm}
-	\begin{itemize}
-			\item Start with \ccb{$f (e) = 0$} for each edge \ccb{$e \in E$}.
-			\item Find an \ccb{$s\rightsquigarrow t$} path \ccb{$P$} where each edge has \ccb{$f (e) < c(e)$}.
-			\item Augment flow along path \ccb{$P$}.
-		\item  Repeat until you get stuck.
-	\end{itemize}
-\bigskip
-
-	
-		\centerline{\includegraphics[width=\textwidth]{figures/p17}}
-}
-%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%18
-
-  \frame{
-	\frametitle{Toward a max-flow algorithm}
-	\ccp{Greedy algorithm.}
-	\vspace{-4mm}
-	\begin{itemize}
-			\item Start with \ccb{$f (e) = 0$} for each edge \ccb{$e \in E$}.
-			\item Find an \ccb{$s\rightsquigarrow t$} path \ccb{$P$} where each edge has \ccb{$f (e) < c(e)$}.
-			\item Augment flow along path \ccb{$P$}.
-		\item  Repeat until you get stuck.
-	\end{itemize}
-\bigskip
-	
-		\centerline{\includegraphics[width=\textwidth]{figures/p18}}
-}
-	
+	\frame{
+		\frametitle{Farthest-in-Future Algorithm}
+		\ccp{Farthest-in-Future Algorithm.}
+		\vspace{-4mm}
+		\begin{itemize}
+			\ccg{\item Cache initialize with two item A and B}
+			\ccg{\item In step 1 and step 2, data requested are already in cache, no eviction occurs}
+			\ccg{\item In step 3, item C is requested but not in the cache. C is brought to cache from memory
+				To make room for C, algorithm evict Item B which is needed the farthest into the future}
+			\ccg{ \item In step 4,  item A is already in cache, no eviction occurs}
+			\ccg{\item In step 5,  Item A is evicted for Item B}
+			\item In step 6 and step 7,  data requested are already in cache, no eviction occurs
+			\ccg{ \item In step 8,  Item C is evicted for Item A}
+		\end{itemize}
+		\vspace{4mm}
+		\centerline{\includegraphics[width=0.52\textwidth]{wsw-pic/ff5}}
+	}
+%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%19
+	\frame{
+		\frametitle{Farthest-in-Future Algorithm}
+		\ccp{Farthest-in-Future Algorithm.}
+		\vspace{-4mm}
+		\begin{itemize}
+			\ccg{\item Cache initialize with two item A and B}
+			\ccg{\item In step 1 and step 2, data requested are already in cache, no eviction occurs}
+			\ccg{\item In step 3, item C is requested but not in the cache. C is brought to cache from memory.
+				To make room for C, algorithm evict Item B which is needed the farthest into the future}
+			\ccg{ \item In step 4,  item A is already in cache, no eviction occurs}
+			\ccg{\item In step 5,  Item A is evicted for Item B}
+			\ccg{\item In step 6 and step 7,  data requested are already in cache, no eviction occurs}
+			\item In step 8,  Item \ccp{C} is evicted for Item \ccp{A}
+		\end{itemize}
+		\vspace{4mm}
+		\centerline{\includegraphics[width=0.52\textwidth]{wsw-pic/ff6}}
+	}
 %%%%//////////////////////////////////////////////////////////////////////////////////////////////%%19
 
 	\frame{

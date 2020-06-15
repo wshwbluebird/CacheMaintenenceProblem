@@ -723,6 +723,15 @@
 \frame{
 	\frametitle{Analysis of Marking Algorithms}
 	\ccp{Marking Algorithms}
+	\begin{example}
+		\centerline{\includegraphics[width=0.6\textwidth]{wsw-pic/k1.png}}
+	\end{example}
+	
+}
+%%//////////////////////////////////////////////////////////////////////////////////////////////%%58
+\frame{
+	\frametitle{Analysis of Marking Algorithms}
+	\ccp{Marking Algorithms}
 	\begin{claim} 
 		The marking algorithm incurs at most k misses per phase, for a total of at most kr misses over all r phases.
 	\end{claim}
@@ -751,6 +760,15 @@
 		If those  k − 1 other distinct items have already been in the cache when the last phase is over, 
 		then the optimum incurs exactly r − 1 misses.
 	  \end{proof}
+}
+%%//////////////////////////////////////////////////////////////////////////////////////////////%%58
+\frame{
+	\frametitle{Analysis of Marking Algorithms}
+	\ccp{Marking Algorithms}
+	\begin{example}
+		\centerline{\includegraphics[width=0.6\textwidth]{wsw-pic/rmone.png}}
+	\end{example}
+	
 }
 %%//////////////////////////////////////////////////////////////////////////////////////////////%%58
 \frame{
@@ -913,6 +931,19 @@
 %%%%//////////////////////////////////////////////////////////////////////////////////////////////%%73
 \frame{
 	\frametitle{Random Marking Algorithms}
+	\begin{definition}
+		\begin{enumerate}
+		  \item fresh : an unmarked item was not marked in the previous phase.
+		  \item stale : an unmarked item was marked in the previous phase.
+		\end{enumerate}
+	\end{definition}
+	\begin{example}
+		\centerline{\includegraphics[width=0.65\textwidth]{wsw-pic/freshstale.png}}
+	\end{example}
+}
+%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%73
+\frame{
+	\frametitle{Random Marking Algorithms}
 	\begin{claim}
 		$f(\delta) \geq \frac{1}{2} \sum_{j=1}^r c_j$
 	  \end{claim}
@@ -920,10 +951,24 @@
 	  \begin{proof}
 		Let $f_j(\delta)$ denote the number of misses incurred by the optimal algorithm in phase j.
 		Then we have $f(\delta) = \sum_{j=1}^r f_j(\delta)$.
-		It is clear that in any phase j , k different items is requested.
-		By the definition of fresh, there are at least $k+c_{j+1}$ distinct items requested bwtween phase j and phase j+1.
+		In any phase j , k different items is requested.
+		There are at least $k+c_{j+1}$ distinct items requested bwtween phase j and phase j+1.
 		Thus, even the optimal schedule will have at least $c_{j+1}$ misses in phase j+1, 
-		as a result we have 
+		so we have 
+		\vspace{10mm}
+		\centerline{\includegraphics[width=0.65\textwidth]{wsw-pic/caotu.png}}
+	\end{proof}
+}
+
+%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%73
+\frame{
+	\frametitle{Random Marking Algorithms}
+	\begin{claim}
+		$f(\delta) \geq \frac{1}{2} \sum_{j=1}^r c_j$
+	  \end{claim}
+	  
+	  \begin{proof}
+		\centerline{\includegraphics[width=0.65\textwidth]{wsw-pic/caotu.png}}
 		\begin{itemize}
 		  \item  $f_j(\delta)+f_{j+1}(\delta) \geq c_{j+1}$
 		  \item  $\sum_{j=0}^{r-1}(f_j(\delta)+f_{j+1}(\delta)) \geq \sum_{j=0}^{r-1} c_{j+1}$
@@ -948,7 +993,7 @@
 	\begin{proof} 
 	H(n) is naturally bounded above $1+\int_1 ^n \frac{1}{x} dx = 1 + \ln n$
 
-	H(n) is naturally bounded below $1+\int_1 ^{n+1} \frac{1}{x} dx = \ln (n+1)$
+	H(n) is naturally bounded below $\int_1 ^{n+1} \frac{1}{x} dx = \ln (n+1)$
 
 	Hence, we can have $H(n) = O(\log n)$
 	\end{proof}
@@ -966,6 +1011,25 @@
 		For every request sequence $\delta$, we have $E(M_\delta) \leq H(k) \sum_{r}^{j=1} c_j$
 	\end{claim}
 }	
+%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%73
+\frame{
+	\frametitle{Random Marking Algorithms}
+	\begin{proof}
+		As $c_j$ denote the the number of requests in phase j to fresh items, 
+		there must be $k-c_j$ requests in phase j to unmarked stale items.
+		\BlankLine
+		\ccr{Q.} What is the probability that the ith request to a stale item, say $s_i$, results in a miss?
+		\ccr{A.}
+		\begin{itemize}
+			\item  \ccb{c}  formerly fresh items that are now marked
+			\item  \ccb{i-1} formerly stale items that are now marked
+			\item  \ccb{k−c-i+1} stale and not yet marked
+			\item  P = $\frac{c}{k-i+1}$
+		\end{itemize}
+		\BlankLine
+		\centerline{\includegraphics[width=0.75\textwidth]{wsw-pic/probe.png}}
+	  \end{proof}
+}	
 
 %%%%//////////////////////////////////////////////////////////////////////////////////////////////%%73
 \frame{
@@ -974,9 +1038,7 @@
 		As $c_j$ denote the the number of requests in phase j to fresh items, 
 		there must be $k-c_j$ requests in phase j to unmarked stale items.
 		\BlankLine
-		We suppose the $i^{th}$ request to a stale item s and there have been c($c \leq c_j$) requests to fresh items.
-		there are k − i + 1 items overall that are still stale and c items that are stale but evcited earlier.
-		Thus, so s is not in the cache at this moment with probability $\frac{c}{k-i+1} \leq \frac{c}{k-i+1}$
+		We know s(i th stale) is not in the cache at this moment with probability $\frac{c}{k-i+1} \leq \frac{c}{k-i+1}$
 		\BlankLine
 		Let $X_j$ denote the number of misses incurred by the Randomized Marking
 		Algorithm in phase j.

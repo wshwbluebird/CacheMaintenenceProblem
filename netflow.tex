@@ -152,9 +152,8 @@
 	}
 	%%//////////////////////////////////////////////////////////////////////////////////////////////%%7
 
-
 \section{Farthest-in-Future Algorithm}
-	%
+
 	%%//////////////////////////////////////////////////////////////////////////////////////////////%%12
 	\frame{
 		\frametitle{Farthest-in-Future Algorithm}
@@ -185,6 +184,7 @@
 	%
 	%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%14
 	%
+
 	\frame{
 		\frametitle{Farthest-in-Future Algorithm}
 		\ccp{Farthest-in-Future Algorithm.}
@@ -202,6 +202,7 @@
 		\vspace{4mm}
 		\centerline{\includegraphics[width=0.52\textwidth]{wsw-pic/ff1}}
 	}
+	%
 	%%%//////////////////////////////////////////////////////////////////////////////////////////////%%15
 	\frame{
 		\frametitle{Farthest-in-Future Algorithm}
@@ -238,6 +239,7 @@
 		\vspace{4mm}
 		\centerline{\includegraphics[width=0.52\textwidth]{wsw-pic/ff3}}
 	}
+
 %%%%//////////////////////////////////////////////////////////////////////////////////////////////%%19
 
 	\frame{
@@ -294,1545 +296,734 @@
 		\vspace{4mm}
 		\centerline{\includegraphics[width=0.52\textwidth]{wsw-pic/ff6}}
 	}
-%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%19
+	%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%19
 
 	\frame{
-    \frametitle{Why the greedy algorithm fails}
-		\ccr{Q.} Why does the greedy algorithm fail?\pause
-
-		\ccc{A.} Once greedy algorithm increases flow on an edge, it never decreases it.
-		\pause\smallskip
-		
-		\cco{Ex.} Consider flow network \ccb{$G$}.	\vspace{-3mm}
-		\begin{itemize}
-			\item The unique max flow has \ccb{$f^*(v,w)=0$}.
-			\item Greedy algorithm could choose \ccb{$s\rightarrow v\rightarrow w \rightarrow t$} as first augmenting path.
-		\end{itemize}\smallskip
-		
-		\centerline{\includegraphics[width=0.4\textwidth]{figures/p19}}\pause
-		
-	\cco{Bottom line.} Need some mechanism to \ccr{undo} a bad decision.	
+		\frametitle{Reduced Schedule}
+		\begin{definition}
+			An eviction schedule is \ccp{reduced} if it fetches an item x only when it is accessed
+		\end{definition}
+		\vspace{5mm}
+		\centerline{\includegraphics[width=0.7\textwidth]{wsw-pic/cmp.png}}	
 	}
 	%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%20
 	\frame{
-		\frametitle{Residual network}
-		\vspace{2mm}
-	\begin{columns}
-		\begin{column}{6cm}
-			\ccp{Original edge} \ccb{$e=(u,v)\in E$}.
-			\begin{itemize}
-				\item Flow \ccb{$f(e)$}.
-				\item Capacity \ccb{$c(e)$}
-			\end{itemize}	
-		\vspace{3mm}
-		
-			\ccp{Reverse edge}  \ccb{$e^{\text { reverse }}=(v, u)$}
-			\begin{itemize}
-				\item	\cco{Undo} flow sent.
-			\end{itemize}	
-		
-		\end{column}
-	
-		\begin{column}{4cm}
-	\centerline{\includegraphics[width=\textwidth]{figures/p20}}
-	\end{column}
-	\end{columns}
-\bigskip\pause
-	\begin{columns}
-		
-	\begin{column}{6cm}
-\ccp{Residual capacity}
-\ccb{$$
-c_{f}(e)=\left\{\begin{array}{ll}{c(e)-f(e)} & {\text { if } e \in E} \\ {f(e)} & {\text { if } e^{\text { reverse }} \in E}\end{array}\right.
-$$}
-  \end{column}
-	
-	\begin{column}{4cm}
-		\centerline{\includegraphics[width=\textwidth]{figures/p20_2}}
-	\end{column}
-\end{columns}
+		\frametitle{Reduced Schedule}
+		\ccr{schedule(a)} is reduced 
 
+		It fetches item \ccp{C} in step 3  when \ccp{C} is accessed
 
-\ccp{Residual network} \ccb{$G_f=(V,E_f,s,t,c_f)$} 	%$ \color{red}\begin{array}{l}
-%\text{\tiny edges with positive}\\[-2mm]
-%\text{\tiny residual capacity}\\
-%\swarrow\\
-%\end{array} $ 	\vspace{-4mm}
-\begin{itemize}
-		\vspace{-4mm}
-	\item \ccb{$E_{f}=\{e : f(e)<c(e)\} \cup\left\{e^{\text { reverse }} : f(e)>0\right\}$}.	%$ \color{red}\begin{array}{l}
-%	\text{\tiny where flow on a reverse edge}\\[-2mm]
-% \quad	\text{\tiny negates flow on}\\[-2mm]
-%	\text{\tiny corresponding forward edge}\\
-%	\swarrow\\
-%	\end{array} $
-% \vspace{-2mm}
-	\item Key property: \ccb{$f'$} is a flow in \ccb{$G_f$} iff \ccb{$f+f'$} is a flow in \ccb{$G$}
-\end{itemize}
+		\ccr{schedule(b)} is not reduced 
+
+		It fetches item \ccp{C} in step 2  but \ccp{C} is not requested 
+
+		\vspace{15mm}
+		\centerline{\includegraphics[width=0.9\textwidth]{wsw-pic/twosche.png}}	
 	}
-	%%
-%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%21
+
+	\frame{
+		\frametitle{Reduced Schedule}
+		\begin{lemma}
+			For any non-reduced schedule S, we are able to construct a reduced schedule $\bar{S}$，
+			which is the reduction of S and brings in at most as many items as the schedule S.
+		\end{lemma}
+
+		\vspace{15mm}
+		\centerline{\includegraphics[width=0.9\textwidth]{wsw-pic/twosche2.png}}	
+	}
+
+	%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%21
 
 \frame{
-	\frametitle{Augmenting path}
-	\begin{definition}
-		An \ccp{augmenting path} is a simple \ccb{$s\rightsquigarrow t$} path in the residual network \ccb{$G_f$}.
-	\end{definition}\pause
-
-  \begin{definition}
-	The \ccp{bottleneck capacity} of an augmenting path \ccb{$P$} is the minimum residual capacity of any edge in \ccb{$P$}.	
-   \end{definition}
-  }
-
-%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%21
-
-\frame{
-	\frametitle{Augmenting path}
-
-    \cco{Key Property.}
-    Let \ccb{$f$} be a flow and let \ccb{$P$} be an augmenting path in \ccb{$G_f$}. After calling \ccb{$f'\leftarrow\mathtt{Augment}(f,c,P)$}, the resulting \ccb{$f'$} is a flow and \ccb{$val(f')=val( f )+bottleneck(G_f, P)$}.\pause
-
-    \begin{exampleblock}{}
-   % \scalebox{0.9}{
-    \begin{algorithm}[H]
-        \SetKwData{x}{x}\SetKwData{y}{y}\SetKwData{z}{z}
-        \SetKwFunction{Au}{\sc Augment}\SetKwFunction{Return}{\sc Return}\SetKwFunction{Init}{\sc Initialize}
-        \SetKwInOut{Input}{input}\SetKwInOut{Output}{output}
-     \Au{$f$,$c$,$P$}
-     \BlankLine
-     $\delta \leftarrow$ bottleneck capacity of augmenting path P\;
-     \For{each edge $e\in P$}{
-       \lIf{$(e\in E)$}{$f(e)\leftarrow f(e)+\delta$}
-      \Else{$f\left(e^{\text { reverse }}\right) \leftarrow f\left(e^{\text { reverse }}\right)-\delta$}
-      }
-      \Return $f$\;
-     \end{algorithm}
-     \end{exampleblock}
-
-     }
-	%%
-	%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%22
-	%
-	\frame{
-		\frametitle{Network flow: quiz 2}
-	Which is the augmenting path of highest bottleneck capacity?
-	\begin{enumerate}\color{blue}
-		\item $A \rightarrow F \rightarrow G \rightarrow H$
-		\item $A \rightarrow B \rightarrow C \rightarrow D \rightarrow H$
-		\item $A \rightarrow F \rightarrow B \rightarrow G \rightarrow H$
-		\item $A \rightarrow F \rightarrow B \rightarrow G \rightarrow C \rightarrow D \rightarrow H$
-	\end{enumerate}	\vspace{3mm}
-		\centerline{\includegraphics[width=0.8\textwidth]{figures/p22}}
-	}
-	%%
-	%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%23
-	\frame{
-		\frametitle{Ford–Fulkerson algorithm}
-		\ccp{Ford–Fulkerson augmenting path algorithm.}
-		\vspace{-3mm}
-		\begin{itemize}
-		\item Start with \ccb{$f (e) = 0$} for each edge \ccb{$e \in E$}.
-		\item Find an \ccb{$s\rightsquigarrow t$} path \ccb{$P$}  in the residual network \ccb{$G_f$}.
-		\item Augment flow along path \ccb{$P$}.
-		\item  Repeat until you get stuck.
-		\end{itemize}
-	\pause
-
-	\begin{exampleblock}{}
-    \begin{algorithm}[H]
-        \SetKwData{x}{x}\SetKwData{y}{y}\SetKwData{z}{z}
-        \SetKwFunction{FF}{\sc Ford–Fulkerson}\SetKwFunction{Return}{\sc Return}\SetKwFunction{Init}{\sc Initialize}
-        \SetKwFunction{Up}{\sc Update}\SetKwFunction{Au}{\sc Augment}
-        \SetKwInOut{Input}{input}\SetKwInOut{Output}{output}
-     \FF{$G$}
-     \BlankLine
-     \For{each edge $e \in E$}{$f(e)\leftarrow 0$}
-     $G_f\leftarrow $ residual network of $G$ with respect to flow $f$\;
-
-     \While{there exists an $s\rightsquigarrow t$ path $P$ in $G_f$}{
-      $f\leftarrow$ \Au{$f$,$c$,$P$}\;
-      \Up{$G_f$}\;
-      }
-      \Return $f$\;
-     \end{algorithm}
-     \end{exampleblock}
-
-	}
-	%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%24
-
-	\section{Max-Flow Min-Cut Theorem}
-
-	%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%25
-	
-	\frame{
-		\frametitle{Relationship between flows and cuts}
-		\begin{lemma}
-		Let \ccb{$f$} be any flow and let \ccb{$(A,B)$} be any cut. Then, the value of the flow \ccb{$f$} equals the net flow across the cut \ccb{$(A,B)$}.	
-		\ccb{\begin{equation*}
-	v a l(f)=\sum\limits_{\text { out of } A} f(e)-\sum\limits_{e \text { in to } A} f(e)
-		\end{equation*}}
-    \end{lemma}
-	
-	\bigskip
-   \centerline{\includegraphics[width=0.8\textwidth]{figures/p25}}
-	}
-	%
-	%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%26
-	\frame{
-	\frametitle{Relationship between flows and cuts}
-		\begin{lemma}
-		Let \ccb{$f$} be any flow and let \ccb{$(A,B)$} be any cut. Then, the value of the flow
-     \ccb{$f$} equals the net flow across the cut \ccb{$(A,B)$}.	
-		\ccb{\begin{equation*}
-	v a l(f)=\sum\limits_{\text { out of } A} f(e)-\sum\limits_{e \text { in to } A} f(e)
-		\end{equation*}}
-    \end{lemma}
-	
-	\bigskip
-\centerline{\includegraphics[width=0.8\textwidth]{figures/p26}}
-}
-	%
-	%%%//////////////////////////////////////////////////////////////////////////////////////////////%%27
-	
-			\frame{
-		\frametitle{Relationship between flows and cuts}
+	\frametitle{Reduced Schedule}
 	\begin{lemma}
-		Let \ccb{$f$} be any flow and let \ccb{$(A,B)$} be any cut. Then, the value of the flow
-     \ccb{$f$} equals the net flow across the cut \ccb{$(A,B)$}.	
-		\ccb{\begin{equation*}
-	v a l(f)=\sum\limits_{\text { out of } A} f(e)-\sum\limits_{e \text { in to } A} f(e)
-		\end{equation*}}
-    \end{lemma}
-	
-	\bigskip
-    \centerline{\includegraphics[width=0.8\textwidth]{figures/p27}}
-	}
-	%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%28
-	\frame{
-	\frametitle{Network flow: quiz 3}	
-	Which is the net flow across the given cut?
-	\begin{enumerate}\color{blue}
-		\item 11 $ (20+25- 8- 11- 9- 6) $
-		\item 26 $ (20+22- 8- 4- 4) $
-		\item  42 $ (20+22) $
-		\item 45 $ (20+25) $
-	\end{enumerate}
-	\bigskip
- \centerline{\includegraphics[width=0.8\textwidth]{figures/p28}}
-}
+		For any non-reduced schedule S, we are able to construct a reduced schedule $\bar{S}$，
+		which is the reduction of S and brings in at most as many items as the schedule S.
+	\end{lemma}
 
-
-
-	%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%29
-		\frame{
-		\frametitle{Relationship between flows and cuts}
-	\begin{lemma}
-		Let \ccb{$f$} be any flow and let \ccb{$(A,B)$} be any cut. Then, the value of the flow
-     \ccb{$f$} equals the net flow across the cut \ccb{$(A,B)$}.	
-		\ccb{\begin{equation*}
-	v a l(f)=\sum\limits_{\text { out of } A} f(e)-\sum\limits_{e \text { in to } A} f(e)
-		\end{equation*}}
-    \end{lemma}\pause
-
-\ccm{\em Proof.}
-
-\ccb{$$\begin{array}{ll}
-val(f)&=\sum\limits_{e \text { out of } s} f(e)-\sum\limits_{\text { e in to } s} f(e) \\
-&=\sum\limits_{v \in A}\left(\sum\limits_{e \text { out of } v} f(e)-\sum\limits_{\text { e in to } v} f(e)\right)\\
-&=\sum\limits_{e \text { out of } A} f(e)-\sum\limits_{e \text { in to } A} f(e).
-\end{array}
-$$}
-
-
-}
-
-	%%//////////////////////////////////////////////////////////////////////////////////////////////%%30
-	\frame{
-		\frametitle{Relationship between flows and cuts}
-		\begin{theorem}{Weak Duality}
-         Let \ccb{$f$} be any flow and \ccb{$(A, B)$} be any cut. Then, \ccb{$val(f) \leq \operatorname{cap}(A, B)$}.
-         \end{theorem}\pause
-	
-\ccm{\em Proof.}
-\ccb{	
-$$
-\begin{aligned}
-\operatorname{val}(f) &=\sum_{e \text { out of } A} f(e)-\sum_{\text {e  in to } A} f(e) \\
-& \leq \sum_{\text { e out of } A} f(e) \\
-& \leq \sum_{e \text { out of } A} c(e) \\
-&=\operatorname{cap}(A, B)
- \end{aligned}
-$$}
-		\vspace{3mm}\centerline{\includegraphics[width=0.8\textwidth]{figures/p30}}
-	}
-	%%
-	%%
-	%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%31
-	%
-	\frame{
-		\frametitle{Certificate of optimality}
-	\begin{corollary}
-		Let \ccb{$f$} be a flow and let \ccb{$(A,B)$} be any cut.
-		If \ccb{$val(f)=\operatorname{cap}(A, B)$}, then \ccb{$f$} is a max flow and \ccb{$(A,B)$} is a min cut.
-	\end{corollary}\pause
-	
-	\ccm{\em Proof.}\vspace{-2mm}
-%\hspace{3.5cm}	$ \color{red}\begin{array}{l}	
-%		\text{\tiny weak duality}\\[-1mm]
-%			\swarrow
-%	\end{array} $
-	\begin{itemize}
-		\vspace{-3mm}
-		\item For any flow \ccb{$f^{\prime} : \quad {val}\left(f^{\prime}\right) \leq 	\operatorname{cap}(A, B)=val(f)$}.
-		\item For any cut \ccb{$\left(A^{\prime}, B^{\prime}\right) : \operatorname{cap}\left(A^{\prime}, B^{\prime}\right) \geq {val}(f)=\operatorname{cap}(A, B)$}
-	\end{itemize}	
-%\vspace{-3mm}
-%\hspace{5.5cm}	$ \color{red}\begin{array}{l}	
-%\nwarrow\\[-2mm]
-%	\text{\tiny weak duality}
-%	\end{array} $
-	
-		\vspace{3mm}\centerline{\includegraphics[width=0.8\textwidth]{figures/p31}}
-	
-	}
-	%
-	%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%32
-	%
-	\frame{
-		\frametitle{Max-flow min-cut theorem}
-
-	\begin{block}{Max-Flow Min-Cut Theorem}	Value of a max flow = capacity of a min cut.
-     \end{block}
-		
-	\vspace{6mm}\centerline{\includegraphics[width=\textwidth]{figures/p32}}
-	}
-	%%
-	%
-	%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%33
-		\frame{
-		\frametitle{Max-flow min-cut theorem}
-		\begin{block}{Max-Flow Min-Cut Theorem}	Value of a max flow = capacity of a min cut.
-     \end{block}\pause
-
-		\begin{block}{Augmenting path theorem} A flow \ccb{$f$} is a max flow iff no augmenting paths.
-        \end{block}\pause
-        	
-		\ccm{\em Proof.}  The following three conditions are equivalent for any flow \ccb{$f$}:\vspace{-3mm}\pause
-		\begin{enumerate}[i.]
-			\item There exists a cut \ccb{$(A, B)$} such that \ccb{$\operatorname{cap}(A, B)=val(f)$}.
-			\item  \ccb{$f$} is a max flow.
-			\item  There is no augmenting path with respect to \ccb{$f$}.
-%$	 \color{red}\leftarrow\begin{array}{l}
-%			\text{\tiny if Ford–Fulkerson terminates,}\\[-2mm]
-%			\quad\text{\tiny (then $f$ is max flow)}
-%			\end{array} $
-		\end{enumerate}\pause
-
-		\ccc{[i$\Rightarrow$ ii]}\pause \hspace{2em}	This is the weak duality corollary.
-			
-	}
-	
-	%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%34
-	\frame{
-	\frametitle{Max-flow min-cut theorem}
-		\begin{block}{Max-Flow Min-Cut Theorem}	Value of a max flow = capacity of a min cut.
-     \end{block}
-		\begin{block}{Augmenting path theorem} A flow \ccb{$f$} is a max flow iff no augmenting paths.
-        \end{block}
-        	
-		\ccm{\em Proof.}  The following three conditions are equivalent for any flow \ccb{$f$}:\vspace{-3mm}
-		\begin{enumerate}[i.]
-			\item There exists a cut \ccb{$(A, B)$} such that \ccb{$\operatorname{cap}(A, B)=val(f)$}.
-			\item  \ccb{$f$} is a max flow.
-			\item  There is no augmenting path with respect to \ccb{$f$}.
-%$	 \color{red}\leftarrow\begin{array}{l}
-%			\text{\tiny if Ford–Fulkerson terminates,}\\[-2mm]
-%			\quad\text{\tiny (then $f$ is max flow)}
-%			\end{array} $
-		\end{enumerate}
-
-	\ccc{[ii$\Rightarrow$ iii]}	 \pause\hspace{2em} We prove contrapositive: \ccov{$\lnot$ iii $\Rightarrow \lnot $ii}.\\ \pause
-	\begin{itemize}
-		\item  Suppose that there is an augmenting path with respect to \ccb{$f$}.
-		\item Can improve flow \ccb{$f$} by sending flow along this path.
-		\item Thus, \ccb{$f$} is not a max flow.
-	\end{itemize}
-	
-	
-}
-	%
-	%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%35
-	\frame{
-		\frametitle{Max-flow min-cut theorem}
-		\ccc{[ iii $\Rightarrow$ i ]}\vspace{-1em}
+	\begin{proof}
+		We can construct using the following steps:
 		\begin{itemize}
-			\item Let \ccb{$f$} be a flow with no augmenting paths.
-			\item Let \ccb{$A$} be set of nodes reachable from \ccb{$s$} in residual network \ccb{$G_f$}.
-			\item By definition of \ccb{$A: s \in A$}.
-			\item By definition of flow \ccb{$f: t \notin A$}.
+			\item In step i, when item \ccp{d} has not been requested, but S brings item \ccp{d} into the cache and evict item \ccp{e}.
+				  $\bar{S}$ leaves item d in memory.
+			\item In step j, when item d is requested. $\bar{S}$ brings item \ccp{d} into the cache and evict item \ccp{e}.
+			\item Otherwise, $\bar{S}$ do the same thing as S
 		\end{itemize}
-		
-		\begin{columns}
-			\begin{column}{6cm}
-			\ccb{$$
-			\begin{aligned}
-			{val}(f) &=\sum_{e \text { out of } A} f(e)-\sum_{\text {e  in to } A} f(e) \\
-			%\color{red}\begin{array}{l}
-%			\hspace{5mm}\nearrow\\
-%			\text{\tiny flow value}\\[-2mm]
-%			\hspace{2mm}\text{\tiny lemma}
-%			\end{array}
-          & = \sum_{\text { e out of } A} c(e)  -  0 \\
-			&=\operatorname{cap}(A, B)
-			\end{aligned}
-			$$}
-			\end{column}
-		\begin{column}{6cm}
-				\vspace{3mm}\centerline{\includegraphics[width=0.8\textwidth]{figures/p35}}     			
-		\end{column}
-		\end{columns}
-	}
+		The cache miss incurred by $\bar{S}$ in step j can be charged to the earlier cache operation 
+		performed by S in step i, when it brought in d.
+	\end{proof}
 
-%%//////////////////////////////////////////////////////////////////////////////////////////////%%36
-	
-    \section{Capacity-Scaling Algorithm}
-	
-%%//////////////////////////////////////////////////////////////////////////////////////////////%%37
-	%%
-	%%
+	}
+%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%45
 	\frame{
-		\frametitle{Analysis of Ford–Fulkerson algorithm (when capacities are integral)}
-
-		\ccp{Assumption.} Every edge capacity \ccb{$c(e)$} is an integer between \ccb{$1$} and \ccb{$C$}.\pause
+		\frametitle{Prove that Farthest-in-Future Algorithm is optimal}
+		\begin{definition}
+			Let \ccp{D} denote the arbitrary sequence of memory references. 
+			Let $S_{FF}$ denote the schedule produced by Farthest-in-Future. 
+			Let $S_∗$ denote a schedule that incurs the minimum possible number of misses.
+		\end{definition}
 		
-		\ccp{Integrality invariant.} Throughout Ford-Fulkerson, every edge flow \ccb{$f(e)$} and residual capacity \ccb{$c_f (e)$} is an integer.\pause
-
-		\ccm{\em Proof.}  By induction on the number of augmenting paths.\pause
-
-%%	\vspace{-2mm}	
-%			
-%	\hspace{6cm}	$ \color{red}\begin{array}{l}	
-%		\quad\text{\tiny  consider cut A =\{ s \}}\\[-2mm]
-%		\text{\tiny (assumes no parallel edges)
-%			}\\[-2mm]
-%	\hspace{1cm} \swarrow
-%		\end{array} $\vspace{-7mm}
-
-		\begin{theorem}
-		Ford–Fulkerson terminates after at most \ccb{$val\left(f^{*}\right) \leq n C$}\\
-		augmenting paths, where \ccb{$f^*$} is a max flow.
-		\end{theorem}\pause
-
-	\ccm{\em Proof.} Each augmentation increases the value of the flow by at least 1.
-	
-	}
-
-%%//////////////////////////////////////////////////////////////////////////////////////////////%%37
-
-	\frame{
-		\frametitle{Analysis of Ford–Fulkerson algorithm (when capacities are integral)}
-    \begin{corollary}
-	The running time of Ford–Fulkerson is \ccb{$O(m n C)$}.
-		\end{corollary}	\pause
-
-   \ccm{\em Proof.} Can use either BFS or DFS to find an augmenting path in \ccb{$O(m)$} time.\pause
-	
-%\hspace{4cm}	$ \color{red}\begin{array}{l}
-%	\quad\text{\tiny $f (e)$ is an integer for every $e$}\\
-%\hspace{1.5cm}\swarrow
-%	\end{array} $
-%	\vspace{-2mm}
-	
-	\begin{block}{Integrality Theorem} There exists an integral max flow \ccb{$f^*$}
-    \end{block}\pause
-
-	\ccm{\em Proof.}
-     Since Ford–Fulkerson terminates, theorem follows from integrality invariant.
-
-	}
-	%%
-	%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%38
-	
-	\frame{
-		\frametitle{Ford–Fulkerson: exponential example}
-	\ccr{Q.} Is generic Ford–Fulkerson algorithm poly-time in input size?\pause
-%	\hspace{6.8cm}\ccr{ $ \begin{array}{l}
-%		\qquad\nearrow\\[-2mm]
-%		\tiny\text{$ m,n $ and $ \log C $}
-%		\end{array} $}	
-%		\vspace{-3mm}
-		
-      \ccc{A.} No. If max capacity is \ccb{$C$}, then algorithm can take \ccb{$\geq C$} iterations.\pause
-
-      \bigskip
-
-      \begin{columns}
-      	\begin{column}{4cm}
-            \begin{itemize}\color{blue}
-      	\item $s \rightarrow v \rightarrow w \rightarrow t$\
-      	\item $s \rightarrow w \rightarrow v \rightarrow t$
-      	\item $s \rightarrow v \rightarrow w \rightarrow t$
-      	\item $s \rightarrow w \rightarrow v \rightarrow t$
-      	\item $\dots$
-      	\item $s \rightarrow v \rightarrow w \rightarrow t$
-      	\item $s \rightarrow w \rightarrow v \rightarrow t$
-      \end{itemize}
-      		
-      	\end{column}
-      	\begin{column}{6cm}
-      	\centerline{\includegraphics[width=\textwidth]{figures/p38}}
-      	\end{column}
-      \end{columns}
-	}
-
-	%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%39
-
-	\frame{
-		\frametitle{Network flow: quiz 4}
-		The Ford–Fulkerson algorithm is guaranteed to terminate if the edge capacities are $\ldots$
-	\begin{enumerate}[A.]
-		\item Rational numbers.
-		\item Real numbers.
-		\item Both A and B.
-		\item Neither A nor B.
-	\end{enumerate}
-	}
-	%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%40
-	
-	\frame{
-		\frametitle{Choosing good augmenting paths}
-	\ccp{Use care when selecting augmenting paths.}	\vspace{-3mm}
-	\begin{itemize}
-		\item Some choices lead to exponential algorithms.
-		\item Clever choices lead to polynomial algorithms.
-	\end{itemize}\pause\bigskip
-
-\ccp{Pathology.} When edge capacities can be irrational, no guarantee that Ford–Fulkerson terminates (or converges to a maximum flow)!
-\pause\bigskip
-		
-\cco{Goal.}	Choose augmenting paths so that:\vspace{-3mm}
-\begin{itemize}
-	\item Can find augmenting paths efficiently.
-	\item Few iterations.
-\end{itemize}
-		
-	}
-	
-		%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%41
-	
-    \frame{
-	 \frametitle{Capacity-scaling algorithm: analysis of running time}
-
-    \begin{block}{Lemma 2}
-    There are \ccb{$\leq 2m$} augmentations per scaling phase.
-    \end{block}\pause
-
-    \ccm{\em Proof.} %\hspace{7cm}\ccr{ $ \begin{array}{l}
-%	\quad\tiny\text{or equivalently}\\[-2mm]
-%	\quad~\tiny\text{at the end}\\[-2mm]
-%	\tiny\text{of a 2$\Delta$-scaling phase}\\
-%	\qquad\swarrow\\
-%	\end{array} $}\vspace{-6mm}
-    \begin{itemize}
-	\item Let \ccb{$f$} be the flow at the beginning of a $\Delta$-scaling phase.
-	\item Lemma 3 \ccc{$\Rightarrow$} max-flow value  \ccb{$\leq {val}(f)+m(2 \Delta)$}.
-	\item Each augmentation in a $\Delta$-phase increases \ccb{$val(f)$} by at least \ccb{$\Delta$}.
-	
-\end{itemize}
-	
+		\begin{lemma}
+			For a number j, Let S be a reduced schedule that makes the same eviction decisions as $S_{FF}$
+			through the first j items in the sequence. 
+			There exist a reduced schedule S' that makes the same eviction decisions as  $S_{FF}$ through the first j + 1 items.
+			S' incurs no more misses than S does.
+		\end{lemma}
 	}
 %%%%//////////////////////////////////////////////////////////////////////////////////////////////%%46
-	
+\frame{
+	\frametitle{Prove that Farthest-in-Future Algorithm is optimal}
+	\ccr{Note}
+
+	Suppose item d = $d_{j+1}$ is requested at step (j+1). Since schedule S and S'
+	make the same eviction decisions as $S_{FF}$ through the first j steps. 
+	They have the same cache contents, before d is requested.
+
+
+	\vspace{5mm}
+	\centerline{\includegraphics[width=0.9\textwidth]{wsw-pic/sff1.png}}	
+}
+
+\frame{
+	\frametitle{Prove that Farthest-in-Future Algorithm is optimal}
+
+	\begin{proof}
+		\ccr{Case one}: \ccp{d is in the cache for both}
+		
+		In step j+1, S makes the same eviction decisions(evict nothing) as $S_{FF}$.
+		Hence we can construct S' = S in this case
+	\end{proof}
+
+
+	\vspace{5mm}
+	\centerline{\includegraphics[width=0.9\textwidth]{wsw-pic/sff2.png}}	
+}
+%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%47
+
+\frame{
+	\frametitle{Prove that Farthest-in-Future Algorithm is optimal}
+
+	\begin{proof}
+		\ccr{Case two}: \ccp{d is not in the cache for both and S and $S_{FF}$ both evict the same item to make room for d}
+		
+		In step j+1, both S and $S_{FF}$ evict the same item and bring \ccp{d} into the cache.
+		Hence we can construct S' = S in this case
+	\end{proof}
+
+
+	\vspace{5mm}
+	\centerline{\includegraphics[width=0.9\textwidth]{wsw-pic/sff3.png}}	
+}
+%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%48
+
+\frame{
+	\frametitle{Prove that Farthest-in-Future Algorithm is optimal}
+
+	\begin{proof}
+		\ccr{Case three}: \ccp{d is not in the cache for both and S and $S_{FF}$ evict the different item to make room for d. 
+								For S, item f is evicted. For $S_{FF}$ , item e is evicted. e $\neq$ f}
+		
+		S' is supposed to evict e rather than f at step j+1. 
+		To ensure that S' incurs no more misses than S in the furture, 
+		S' should try to get its cache back to the same state as S as quickly as possible,
+		so as to having it behave like S later.
+	\end{proof}
+
+	\vspace{5mm}
+	\centerline{\includegraphics[width=0.9\textwidth]{wsw-pic/sff4.png}}	
+}
+
+%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%48
 	\frame{
-		\frametitle{Capacity-scaling algorithm: analysis of running time}
-    \begin{block}{Lemma 3}
-	Let \ccb{$f$} be the flow at the end of a \ccb{$\Delta$}-scaling phase.\\
-	Then, the max-flow value \ccb{$\leq \operatorname{val}(f)+m \Delta$}.
-\end{block}\pause
+		\frametitle{Prove that Farthest-in-Future Algorithm is optimal}
 
-    \ccm{\em Proof.} \vspace{-4mm}\pause
+		\begin{proof}
+			\ccr{Case three}: \ccp{For S, item f is evicted. For $S_{FF}$ , item e is evicted. e $\neq$ f}
+			
+			from request j+2 onward, S‘ behaves exactly like S  until one of the following things happens for the first time
+			\begin{itemize}
+				\item 
+				(a) An item g is requested and g $\neq$ e and S evicts e to make room for g. 
+				In this case we can have S' evict f instead of e.
+				Then, S and S' have the same cache state. 
+				Hence, S' incurs no more misses than S in this case.
+			\end{itemize}
+		\end{proof}
+		\vspace{1mm}
+		\centerline{\includegraphics[width=0.9\textwidth]{wsw-pic/sff5.png}}	
+	}
+%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%48
+
+	\frame{
+		\frametitle{Prove that Farthest-in-Future Algorithm is optimal}
+
+		\begin{proof}
+			\ccr{Case three}: \ccp{For S, item f is evicted. For $S_{FF}$ , item e is evicted. e $\neq$ f}
+			
+			from request j+2 onward, S‘ behaves exactly like S  until one of the following things happens for the first time
+			\begin{itemize}
+				\item 
+				(b) The item f is requested and S evicts an item $e'$ and  $e' = e$, 
+				then schedule $S'$ can reach the same cache state with $S$ after this step
+				by simply accessing f from the cache. Then $S$ and $S'$ will be same after this step.
+			\end{itemize}
+			
+		\end{proof}
+
+		\vspace{1mm}
+		\centerline{\includegraphics[width=0.9\textwidth]{wsw-pic/sff6.png}}	
+	}
+%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%48
+
+	\frame{
+		\frametitle{Prove that Farthest-in-Future Algorithm is optimal}
+
+		\begin{proof}
+			\ccr{Case three}: \ccp{For S, item f is evicted. For $S_{FF}$ , item e is evicted. e $\neq$ f}
+			
+			from request j+2 onward, S‘ behaves exactly like S  until one of the following things happens for the first time
+			\begin{itemize}
+				\item (c) 
+				The item f is requested and S evicts an item $e'$ and  $e' \neq e$, 
+				then $S'$ can reach the same cache state with $S$ by evicting $e'$ and bringing 
+				$e$ back to the cache.
+				$S'$ incurs no more misses than $S$ does in this case
+			\end{itemize}
+		\end{proof}
+
+		\vspace{1mm}
+		\centerline{\includegraphics[width=0.9\textwidth]{wsw-pic/sff7.png}}	
+	}
+%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%48
+
+	\frame{
+		\frametitle{Prove that Farthest-in-Future Algorithm is optimal}
+
+		\begin{proof}
+			\ccr{Case three}: \ccp{For S, item f is evicted. For $S_{FF}$ , item e is evicted. e $\neq$ f}
+			
+			from request j+2 onward, S‘ behaves exactly like S  until one of the following things happens for the first time
+			\begin{itemize}
+				\item (d) The item e is requested. This case will not happen before \ccp{case(b)}
+				\item (e) In other condition, We can have S' do the same thing as S and $S'$ incurs no more misses than $S$ does in this case.
+			\end{itemize}		
+			
+		\end{proof}	
+	}
+%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%48
+	\frame{
+		\frametitle{Prove that Farthest-in-Future Algorithm is optimal}
+
+		\begin{definition}
+			Let \ccp{D} denote the arbitrary sequence of memory references. 
+			Let $S_{FF}$ denote the schedule produced by Farthest-in-Future. 
+			Let $S_∗$ denote a schedule that incurs the minimum possible number of misses.
+		\end{definition}
+
+		\begin{theorem}
+			$S_{FF}$ incurs no more misses than any other schedule $S*$ and hence is optimal
+		\end{theorem}
+	}
+%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%48
+\frame{
+	\frametitle{Prove that Farthest-in-Future Algorithm is optimal}
+	\begin{proof}
+		We prove this claim by transforming $S^*$ to $S_{FF}$ with no more missed.
+		\begin{enumerate}
+			\item  we can set $S_0 = S^*$ because $S^*$ and $S_{FF}$ have the same cache state before the first
+			item access.
+			\item  According to lemma above, there exits a reduced schedule $S_1$ that makes the same eviction decisions as $S_{FF}$ 
+			through the first j + 1 items and incurs no more misses than $S_0$ does. we are able to construct $S_1$ 
+			\item  We continue applying lemma above inductively for j = 1, 2, 3, ... , m, producing schedules $S_j$ 
+			that agree with $S_{FF}$ through the first j steps. 
+			As $S_{j+1}$ incurs no more misses than $S_{j}$ for each j, $S_m$ also incurs no more misses than $S^*$
+			\item  As we can have $S_m = S_{FF}$ by the definition, 
+			it is proved that $S_{FF}$ incurs no more misses than $S^*$ and hence is optimal.
+		\end{enumerate}  
+	\end{proof}	
+}
+%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%48
+
+	\frame{
+		\frametitle{Conclusion in this section}
+
+
+		\ccr{Conclusion}: 
+			
 		\begin{itemize}
-			\item We show there exists a cut \ccb{$(A, B)$} such that \ccb{$cap(A, B)\leq val(f) + m \Delta$}.
-			\item Choose \ccb{$A$} to be the set of nodes reachable from \ccb{$s$} in \ccb{$G_f (\Delta)$}.
-			\item By definition of \ccb{$A: s \in A$}.
-			\item By definition of flow \ccb{$f: t \notin A$}.
-		\end{itemize}
-	\bigskip\pause
-
-	\begin{columns}
-	\hspace{2mm}	\begin{column}{6cm}
-	\ccb{$\begin{array}{ll}
-	val(f)&=\sum\limits_{e \text { out of } A} f(e)-\sum\limits_{e \text { in to } A} f(e)\\
-	%\ccr{ \begin{array}{l}
-%			~~\nearrow\\[-2mm]
-%			\tiny\text{flow}\\[-2mm]
-%			\tiny\text{value}\\[-2mm]			
-%			\tiny\text{lemma}
-%		\end{array} }
-	  &\geq \sum\limits_{e \text { out of } A}(c(e)-\Delta)-\sum\limits_{\text { e in to } A} \Delta\\
-	  &\geq \sum\limits_{e \text { out of } A} c(e)-\sum\limits_{e \text { out of } A} \Delta-\sum\limits_{e \text { in to } A} \Delta \\
-	   &\geq \operatorname{cap}(A, B)-m \Delta
-	   \end{array}$}
-		\end{column}
-	
-	\begin{column}{5cm}
-	\vspace{3mm}\centerline{\includegraphics[width=0.8\textwidth]{figures/p46}}
-	\end{column}
-	\end{columns}	
+			\item  Introduce a Farthest-in-Future Algorithm which is used to solve Caching problem given request sequence
+			\item  Introduce the reduced schedule
+			\item  Prove that Farthest-in-Future Algorithm is optimal
+		\end{itemize}		
 		
 	}
+%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%48
 
-%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%45
-
-	\section{Shortest Augmenting Paths}
+\section{Marking Algorithms}
 
 %%%%//////////////////////////////////////////////////////////////////////////////////////////////%%48
 	%%
 	\frame{
-		\frametitle{Shortest augmenting path}
-		\ccr{Q.} How to choose next augmenting path in Ford–Fulkerson? \pause
-
-		\ccc{A.}  Pick one that uses the \ccp{fewest} edges.\pause
-
-
-\begin{exampleblock}{}
-    \begin{algorithm}[H]
-        \SetKwData{x}{x}\SetKwData{y}{y}\SetKwData{z}{z}
-        \SetKwFunction{CS}{\sc Shortest-Augmenting-Path}\SetKwFunction{Return}{\sc Return}\SetKwFunction{Init}{\sc Initialize}
-        \SetKwFunction{Up}{\sc Update}\SetKwFunction{Au}{\sc Augment}\SetKwFunction{BFS}{\sc BFS}
-        \SetKwInOut{Input}{input}\SetKwInOut{Output}{output}
-     \CS{$G$}
-     \BlankLine
-     \For{each edge $e \in E$}{$f(e)\leftarrow 0$}
-     $G_f\leftarrow$ residual network of $G$ with respect to flow $f$\;
-	 \While{there exists an $s\rightsquigarrow t$ path in $G_f$}{
-      $P\leftarrow$ \BFS{$(G_f)$}\;
-      $f \leftarrow$ \Au{$f$, $c$, $P$}\;
-      \Up{$G_f$}\;
-       }
-      \Return $f$\;
-     \end{algorithm}
-     \end{exampleblock}
-
-
-	}
-	
-	%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%49
-	\frame{
-		\frametitle{Shortest augmenting path: overview of analysis}
-	
-	\begin{block}{Lemma 1}
-		The length of a shortest augmenting path never decreases.
-	\end{block}\pause
-
-    \begin{block}{Lemma 2}
-    After at most \ccb{$m$} shortest-path augmentations, the length of a shortest augmenting path strictly increases.
-    \end{block}\pause
-
-    \begin{theorem}
-    The shortest-augmenting-path algorithm takes \ccb{$O(m^2 n)$} time.
-    \end{theorem}\pause
-
-    \ccm{\em Proof.}\pause
-\begin{itemize}
-	\item \ccb{$O(m)$} time to find a shortest augmenting path via BFS.\pause
-	\item There are \ccb{$\leq mn$} augmentations\pause
-	\begin{enumerate}[-]
-		\item at most \ccb{$m$} augmenting paths of length \ccb{$k$} \pause \ccpk{$\longleftarrow$ Lemma 1 + Lemma 2 }
-		\item at most \ccb{$n-1$} different lengths
-	\end{enumerate}
-\end{itemize}
-	}
-%%//////////////////////////////////////////////////////////////////////////////////////////////%%50
-%	
-	\frame{
-		\frametitle{Shortest augmenting path: analysis}
-    \begin{definition}
-        Given a \ccp{digraph} \ccb{$G = (V, E)$} with source \ccb{$s$}, its \ccp{level graph} is defined by:
-        \vspace{-4mm}
-\begin{itemize}
-	\item \ccb{$\ell(v)$ = number of edges in shortest $s\rightsquigarrow v$ path}.
-	\item \ccb{$L_G = (V,E_G)$} is the subgraph of \ccb{$G$} that contains only those edges \ccb{$(v, w) \in E$}
-	with  \ccb{$\ell(w) = \ell(v) + 1$}.
-\end{itemize}
-\end{definition}	
-\vspace{3mm}\centerline{\includegraphics[width=0.7\textwidth]{figures/p50}}
-	}
-%%//////////////////////////////////////////////////////////////////////////////////////////////%%51
-\frame{
-	\frametitle{Network flow: quiz 5}
-	Which edges are in the level graph of the following digraph?
-	\begin{enumerate}[A.]
-		\item \ccb{$D\rightarrow F$}
-		\item \ccb{$E\rightarrow F$}
-		\item  Both A and B.
-		\item Neither A nor B.
-	\end{enumerate}
-	
-	\vspace{1cm}\centerline{\includegraphics[width=\textwidth]{figures/p51}}
-	
-}
-
-
-%%//////////////////////////////////////////////////////////////////////////////////////////////%%52
-
-
-\frame{
-	\frametitle{Shortest augmenting path: analysis}
-	\begin{definition}
-        Given a \ccp{digraph} \ccb{$G = (V, E)$} with source \ccb{$s$}, its \ccp{level graph} is defined by:
-        \vspace{-4mm}
-\begin{itemize}
-	\item \ccb{$\ell(v)$ = number of edges in shortest $s\rightsquigarrow v$ path}.
-	\item \ccb{$L_G = (V,E_G)$} is the subgraph of \ccb{$G$} that contains only those edges \ccb{$(v, w) \in E$}
-	with  \ccb{$\ell(w) = \ell(v) + 1$}.
-\end{itemize}
-\end{definition}
-
-\cco{Key property.} \ccb{$P$} is a shortest \ccb{$s\rightsquigarrow v$} path in \ccb{$G$} iff \ccb{$P$}  is an \ccb{$s\rightsquigarrow v$}  path in \ccb{$L_G$}.
-	
-	\vspace{1cm}\centerline{\includegraphics[width=0.8\textwidth]{figures/p52}}
-}
-
-
-	
-	%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%53
-	%%
-	\frame{
-		\frametitle{Shortest augmenting path: analysis}
-	\begin{block}{Lemma 1}
-		The length of a shortest augmenting path never decreases.
-	\end{block}\pause\vspace{-1em}
-
-     \ccm{\em Proof.}\pause\vspace{-1em}
-	\begin{itemize}
-		\item Let \ccb{$f$} and \ccb{$f'$}  be flow before and after a shortest-path augmentation.
-		\item  Let \ccb{$L_G$} and \ccb{$L_{G'}$} be level graphs of \ccb{$G_f$} and \ccb{$G_{f'}$}.
-		\item Only back edges added to \ccb{$G_{f'}$} \\
-		(any \ccb{$s\rightsquigarrow t$} path that uses a back edge is longer than previous length)
-	\end{itemize}
-
-    \centerline{\includegraphics[width=0.6\textwidth]{figures/p53}}     	
-	}
-	%%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%54
-	%%%
-	\frame{
-		\frametitle{Shortest augmenting path: analysis}
-	    \begin{block}{Lemma 2}
-    After at most \ccb{$m$} shortest-path augmentations, the length of a shortest augmenting path strictly increases.
-    \end{block}\pause\vspace{-1em}
-     \ccm{\em Proof.}\pause\vspace{-1em}
-	\begin{itemize}
-	\item  At least one (bottleneck) edge is deleted from \ccb{$L_G$} per augmentation.
-	\item No new edge added to \ccb{$L_G$} until shortest path length strictly increases.
-		\end{itemize}
-		
-		\vspace{3mm}\centerline{\includegraphics[width=.65\textwidth]{figures/p54}}
-		
-	}
-	
-
-	
-	
-	%%//////////////////////////////////////////////////////////////////////////////////////////////%%55
-	\frame{
-		\frametitle{Shortest augmenting path: review of analysis}
-	\begin{block}{Lemma 1}
-		The length of a shortest augmenting path never decreases.
-	\end{block}
-
-    \begin{block}{Lemma 2}
-    After at most \ccb{$m$} shortest-path augmentations, the length of a shortest augmenting path strictly increases.
-    \end{block}
-
-    \begin{theorem}
-    The shortest-augmenting-path algorithm takes \ccb{$O(m^2 n)$} time.
-    \end{theorem}
-   	
-	}
-	
-	%%//////////////////////////////////////////////////////////////////////////////////////////////%%56
-	
-	\frame{
-		\frametitle{Shortest augmenting path: improving the running time}
-		
-		
-		\cco{Note.}  \ccb{$\Theta(m n)$} augmentations necessary for some flow networks.
-		\pause\hspace{-2em}
+		\frametitle{Marking Algorithms}
 		\begin{itemize}
-			\item Try to decrease time per augmentation instead.
-			\item Simple idea \ccc{$\Rightarrow$} \ccb{$\ccb{O(mn^2)}$}   \hspace{2em }[\ccc{Dinitz 1970}]\pause
-			\item Dynamic trees \ccc{$\Rightarrow$} \ccb{$O(m n \log n)$}   \hspace{2em}  [\ccc{Sleator–Tarjan 1983}]
+			\item solve the problem in Case two (The eviction schedule has to determine without knowledge of what’s coming in the future)
+			\item it is a a class of algorithms rather than a single specific algorithm
 		\end{itemize}
-	\vspace{3mm}\centerline{\includegraphics[width=0.8\textwidth,height=5cm]{figures/p56}}
-	}
 
+		
+		\vspace{8mm}
+		\centerline{\includegraphics[width=0.7\textwidth]{wsw-pic/marking.png}}
+
+	}
 %%//////////////////////////////////////////////////////////////////////////////////////////////%%58
+	\frame{
+		\frametitle{Marking Algorithms}
+		\begin{exampleblock}{}
+			\begin{algorithm}[H]
+				\SetKwData{x}{x}\SetKwData{y}{y}\SetKwData{z}{z}
+				\SetKwFunction{CS}{\sc Marking Schdule}\SetKwFunction{Return}{\sc Return}\SetKwFunction{Init}{\sc Initialize}
+				\SetKwFunction{Up}{\sc Update}\SetKwFunction{Au}{\sc Augment}\SetKwFunction{BFS}{\sc BFS}
+				\SetKwInOut{Input}{input}\SetKwInOut{Output}{output}
+			\CS{Sequence}
+			\BlankLine
+			Unmark all items
 
-\section{Dinitz' Algorithm}
-	
+			\For{each item $s \in Sequence$}{
+				
+				Mark s
+
+				\If{$s$ is not in cache}{
+					evict nothing
+				}\Else{
+					\If{all items currently in the cache are marked}{
+						Declare the phase over
+
+						Processing of s is deferred to start of next phase
+					}\Else{
+						Evict an unmarked item from the cache
+					}
+				}
+			}
+			\end{algorithm}
+			\end{exampleblock}
+	}
 %%//////////////////////////////////////////////////////////////////////////////////////////////%%58
-	
-      \frame{
-		\frametitle{Dinitz' algorithm}
-    	\cco{Two types of augmentations.}
-		\begin{itemize}\vspace{-3mm}
-			\item \ccp{Normal}: length of shortest path does not change.
-			\item \ccp{Special}: length of shortest path strictly increases.
-		\end{itemize}\pause
-		
-		\ccp{Phase of normal augmentations.}
-%\ccr{$\longleftarrow\begin{array}{l}{\text {\tiny within a phase, length of shortest }} \\[-2mm] {\text {\tiny augmenting path does not change %}}\end{array}$}
-	\begin{itemize}\vspace{-3mm}
-		\item Construct level graph \ccb{$L_G$}.
-	\ccg{	\item Start at $s$, advance along an edge in $L_G$ until reach $t$ or get stuck.
-	\item If reach $t$, augment flow; update $L_G$; and restart from $s$.
-		\item If get stuck, delete node from $L_G$ and retreat to previous node.}
-	\end{itemize}
-		
-	\vspace{3mm}\centerline{\includegraphics[width=0.8\textwidth]{figures/p58}}
-	}
-	
-	
-	
-%	%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%59
-	
-   \frame{
-	\frametitle{Dinitz' algorithm}
-		\cco{Two types of augmentations.}
-		\begin{itemize}\vspace{-3mm}
-			\item \ccp{Normal}: length of shortest path does not change.
-			\item \ccp{Special}: length of shortest path strictly increases.
-		\end{itemize}
-	
-	\ccp{Phase of normal augmentations.}
-	\begin{itemize}\vspace{-3mm}
-		\ccg{	\item Construct level graph $L_G$.}
-		\item Start at \ccb{$s$}, advance along an edge in \ccb{$L_G$} until reach \ccb{$t$} or get stuck.
-		\ccg{	\item If reach $t$, augment flow; update $L_G$; and restart from $s$.
-			\item If get stuck, delete node from $L_G$ and retreat to previous node.}
-	\end{itemize}
-	\vspace{3mm}\centerline{\includegraphics[width=0.73\textwidth]{figures/p59}}
-	
-}
-%	%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%60
-
-    \frame{
-	 \frametitle{Dinitz' algorithm}
-		\cco{Two types of augmentations.}
-		\begin{itemize}\vspace{-3mm}
-			\item \ccp{Normal}: length of shortest path does not change.
-			\item \ccp{Special}: length of shortest path strictly increases.
-		\end{itemize}
-	
-	\ccp{Phase of normal augmentations.}
-	\begin{itemize}\vspace{-3mm}
-		\ccg{	\item Construct level graph $L_G$.
-		\item Start at $s$, advance along an edge in $L_G$ until reach $t$ or get stuck.}
-		\item If reach \ccb{$t$}, augment flow; update \ccb{$L_G$}; and restart from \ccb{$s$}.
-		\ccg{	\item If get stuck, delete node from $L_G$ and retreat to previous node.}
-	\end{itemize}
-	
-	\vspace{3mm}\centerline{\includegraphics[width=0.8\textwidth]{figures/p60}}
-}
-%	%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%61
-
-   \frame{
-	\frametitle{Dinitz' algorithm}
-		\cco{Two types of augmentations.}
-		\begin{itemize}\vspace{-3mm}
-			\item \ccp{Normal}: length of shortest path does not change.
-			\item \ccp{Special}: length of shortest path strictly increases.
-		\end{itemize}
-	
-	\ccp{Phase of normal augmentations.}
-	\begin{itemize}\vspace{-3mm}
-	\ccg{\item Construct level graph $L_G$.}
-		\item Start at \ccb{$s$}, advance along an edge in \ccb{$L_G$} until reach \ccb{$t$} or get stuck.
-		\ccg{\item If reach $t$, augment flow; update $L_G$; and restart from $s$.
-			\item If get stuck, delete node from {$L_G$} and retreat to previous node.}
-	\end{itemize}
-	\vspace{3mm}\centerline{\includegraphics[width=0.8\textwidth]{figures/p61}}
-	
-}
-%	%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%62
-
-     \frame{
-  \frametitle{Dinitz' algorithm}
-	
-	\cco{Two types of augmentations.}
-		\begin{itemize}\vspace{-3mm}
-			\item \ccp{Normal}: length of shortest path does not change.
-			\item \ccp{Special}: length of shortest path strictly increases.
-		\end{itemize}
-	
-	\ccp{Phase of normal augmentations.}
-	\begin{itemize}\vspace{-3mm}
-		\ccg{	\item Construct level graph $L_G$.
-		\item Start at $s$, advance along an edge in $L_G$ until reach $t$ or get stuck.
-		\item If reach $t$, augment flow; update $L_G$; and restart from $s$.}
-		\item If get stuck, delete node from \ccb{$L_G$} and retreat to previous node.
-	\end{itemize}
-	
-	\vspace{3mm}\centerline{\includegraphics[width=0.8\textwidth]{figures/p62}}
-}
-
-%	%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%63
 \frame{
-	\frametitle{Dinitz' algorithm}
-		\cco{Two types of augmentations.}
-		\begin{itemize}\vspace{-3mm}
-			\item \ccp{Normal}: length of shortest path does not change.
-			\item \ccp{Special}: length of shortest path strictly increases.
-		\end{itemize}
-	
-	\ccp{Phase of normal augmentations.}
-	\begin{itemize}\vspace{-3mm}
-		\ccg{	\item Construct level graph $L_G$.}
-		\item Start at \ccb{$s$}, advance along an edge in \ccb{$L_G$} until reach \ccb{$t$} or get stuck.
-		\ccg{	\item If reach $t$, augment flow; update $L_G$; and restart from $s$.
-		\item If get stuck, delete node from $L_G$ and retreat to previous node.}
-	\end{itemize}
-	
-	\vspace{3mm}\centerline{\includegraphics[width=0.8\textwidth]{figures/p63}}
+	\frametitle{Marking Algorithms}
+	\begin{definition}
+		To make it easy to analysis.
+		\begin{enumerate}
+			\item Add a Phase 0 that takes place before the first phase. In phase 0, all the items initially in the cache are requested once.
+			\item Add a epilogue in final Phase r, in which every item currently in the cache of the optimal algorithm is requested twice in roundrobin fashion
+		  \end{enumerate} 
+	\end{definition}
+	\vspace{4mm}
+	\centerline{\includegraphics[width=0.6\textwidth]{wsw-pic/markp0.png}}
 }
-%	%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%64
-    \frame{
-	\frametitle{Dinitz' algorithm}
-		\cco{Two types of augmentations.}
-		\begin{itemize}\vspace{-3mm}
-			\item \ccp{Normal}: length of shortest path does not change.
-			\item \ccp{Special}: length of shortest path strictly increases.
-		\end{itemize}
-
-	
-	\ccp{Phase of normal augmentations.}
-	\begin{itemize}\vspace{-3mm}
-		\ccg{	\item Construct level graph $L_G$.
-		\item Start at $s$, advance along an edge in $L_G$ until reach $t$ or get stuck.}
-			\item If reach \ccb{$t$}, augment flow; update \ccb{$L_G$}; and restart from \ccb{$s$}.
-			\ccg{\item If get stuck, delete node from $L_G$ and retreat to previous node.}
-	\end{itemize}
-	
-	\vspace{3mm}\centerline{\includegraphics[width=0.7\textwidth]{figures/p64}}
-}
-%	%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%65
+%%//////////////////////////////////////////////////////////////////////////////////////////////%%58
 \frame{
-	\frametitle{Dinitz' algorithm}
-		\cco{Two types of augmentations.}
-		\begin{itemize}\vspace{-3mm}
-			\item \ccp{Normal}: length of shortest path does not change.
-			\item \ccp{Special}: length of shortest path strictly increases.
-		\end{itemize}
-	
-	\ccb{Phase of normal augmentations.}
-	\begin{itemize}\vspace{-3mm}
-		\ccg{	\item Construct level graph $L_G$.}
-		\item Start at \ccb{$s$}, advance along an edge in \ccb{$L_G$} until reach \ccb{$t$} or get stuck.
-		\ccg{	\item If reach $t$, augment flow; update $L_G$; and restart from $s$.
-			\item If get stuck, delete node from $L_G$ and retreat to previous node.}
-	\end{itemize}
-	
-	\vspace{3mm}\centerline{\includegraphics[width=0.8\textwidth]{figures/p65}}
+	\frametitle{Marking Algorithms}
+	\begin{exampleblock}
+		A
+		According to Marking Algorithm
+		\begin{enumerate}
+			\item In step 3, C is not in cache and all cache items are marked, as a aresult phase 0 is over and phase 1 begins.
+				  Item C is marked
+			\item In step 4, C is in the cache and marked, so evict nothing.
+		  \end{enumerate} 
+	\end{exampleblock}
+	\vspace{4mm}
+	\centerline{\includegraphics[width=0.6\textwidth]{wsw-pic/markp1.png}}
 }
-%	%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%66
+%%//////////////////////////////////////////////////////////////////////////////////////////////%%58
 \frame{
-	\frametitle{Dinitz' algorithm}
-		\cco{Two types of augmentations.}
-		\begin{itemize}\vspace{-3mm}
-			\item \ccp{Normal}: length of shortest path does not change.
-			\item \ccp{Special}: length of shortest path strictly increases.
-		\end{itemize}
-	
-	\ccb{Phase of normal augmentations.}
-	\begin{itemize}\vspace{-3mm}
-			\ccg{ \item Construct level graph $L_G$.
-		\item Start at $s$, advance along an edge in $L_G$ until reach $t$ or get stuck.
-		\item If reach $t$, augment flow; update $L_G$; and restart from $s$.}
-			\item If get stuck, delete node from \ccb{$L_G$} and retreat to previous node.
-	\end{itemize}
-	\vspace{3mm}\centerline{\includegraphics[width=0.8\textwidth]{figures/p66}}
-	
+	\frametitle{Marking Algorithms}
+	\begin{exampleblock}
+		A
+		According to Marking Algorithm
+		\begin{enumerate}
+			\item In step 5, B is in cache but not marked. So, evict nothing and mark B.
+		  \end{enumerate} 
+	\end{exampleblock}
+	\vspace{4mm}
+	\centerline{\includegraphics[width=0.6\textwidth]{wsw-pic/markp2.png}}
 }
-%	%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%67
+%%//////////////////////////////////////////////////////////////////////////////////////////////%%58
 \frame{
-	\frametitle{Dinitz' algorithm}
-		\cco{Two types of augmentations.}
-		\begin{itemize}\vspace{-3mm}
-			\item \ccp{Normal}: length of shortest path does not change.
-			\item \ccp{Special}: length of shortest path strictly increases.
-		\end{itemize}
-	
-	\ccb{Phase of normal augmentations.}
-	\begin{itemize}\vspace{-3mm}
-		\ccg{ \item Construct level graph $L_G$.
-			\item Start at $s$, advance along an edge in $L_G$ until reach $t$ or get stuck.
-			\item If reach $t$, augment flow; update $L_G$; and restart from $s$.}
-		\item If get stuck, delete node from \ccb{$L_G$} and retreat to previous node.
-	\end{itemize}
-	
-	\vspace{3mm}\centerline{\includegraphics[width=0.8\textwidth]{figures/p67}}
+	\frametitle{Marking Algorithms}
+	\begin{exampleblock}
+		A
+		According to Marking Algorithm
+		\begin{enumerate}
+			\item In step 6, A is in not cache and all cache items are marked. 
+				  So, unmark all item in cache and begin a new phase.
+				  Then evcit an item to make room for A. Mark A
+		  \end{enumerate} 
+	\end{exampleblock}
+	\vspace{4mm}
+	\centerline{\includegraphics[width=0.6\textwidth]{wsw-pic/markp3.png}}
 }
-%	%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%68
+%%//////////////////////////////////////////////////////////////////////////////////////////////%%58
 \frame{
-	\frametitle{Dinitz' algorithm}
-	
-		\cco{Two types of augmentations.}
-		\begin{itemize}\vspace{-3mm}
-			\item \ccp{Normal}: length of shortest path does not change.
-			\item \ccp{Special}: length of shortest path strictly increases.
-		\end{itemize}
+	\frametitle{Marking Algorithms}
+	\begin{exampleblock}
+		A
+		Suppose phase 2 is the last phase r (r = 2).
+		According to the definition.
 
-	
-\ccb{Phase of normal augmentations.}
-\begin{itemize}\vspace{-3mm}
-	\item Construct level graph $L_G$.
-	\item Start at $s$, advance along an edge in $L_G$ until reach $t$ or get stuck.
-	\item If reach $t$, augment flow; update $L_G$; and restart from $s$.
-	\item If get stuck, delete node from $L_G$ and retreat to previous node.
-\end{itemize}
-\vspace{3mm}\centerline{\includegraphics[width=0.8\textwidth]{figures/p68}}
+		\begin{enumerate}
+			\item In step 7 and 8, we request all item in cache twice in roundrobin fashion
+		  \end{enumerate} 
+	\end{exampleblock}
+	\vspace{4mm}
+	\centerline{\includegraphics[width=0.6\textwidth]{wsw-pic/markp4.png}}
 }
+%%//////////////////////////////////////////////////////////////////////////////////////////////%%58
+\frame{
+	\frametitle{Analysis of Marking Algorithms}
+	\ccp{Marking Algorithms}
 
-
-
-%	%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%69
-	\frame{
-		\frametitle{Dinitz' algorithm (as refined by Even and Itai)}
-
-\begin{exampleblock}{}
-\scalebox{.9}	{
-\begin{columns}[T]
-		\begin{column}{5cm}
-
-       \begin{algorithm}[H]
-        \SetKwData{x}{x}\SetKwData{y}{y}\SetKwData{z}{z}
-        \SetKwFunction{Return}{\sc Return}\SetKwFunction{Init}{\sc Initialize}\SetKwFunction{Adv}{\sc Advance}
-        \SetKwFunction{Up}{\sc Update}\SetKwFunction{Au}{\sc Augment}\SetKwFunction{BFS}{\sc BFS}\SetKwFunction{GT}{\sc goto}
-        \SetKwInOut{Input}{input}\SetKwInOut{Output}{output}
-     \Init{$G$, $f$}
-     \BlankLine
-     $L_{G} \leftarrow \text { level-graph of } G_{f}$\\
-			$P \leftarrow \varnothing$\\
-	  \GT \Adv{$s$}\;
-
-     \end{algorithm}
-
-     \vspace{9mm}
-
-    \begin{algorithm}[H]
-        \SetKwData{x}{x}\SetKwData{y}{y}\SetKwData{z}{z}
-        \SetKwFunction{Return}{\sc Return}\SetKwFunction{Init}{\sc Initialize}\SetKwFunction{Adv}{\sc Advance}
-        \SetKwFunction{Up}{\sc Update}\SetKwFunction{Au}{\sc Augment}\SetKwFunction{BFS}{\sc BFS}\SetKwFunction{GT}{\sc goto}
-        \SetKwFunction{Re}{\sc Retreat}
-        \SetKwInOut{Input}{input}\SetKwInOut{Output}{output}
-     \Re{$v$}
-     \BlankLine
-      \lIf{$v=s$}{Stop}
-      \Else{
-      Delete $v$ from $L_G$\;
-		Remove last edge $(u, v)$ from $P$\;
-      }
-    \GT \Adv{$u$}\;
-     \end{algorithm}
-		\end{column}
-	
-	\begin{column}{5cm}
-		
- \begin{algorithm}[H]
-        \SetKwData{x}{x}\SetKwData{y}{y}\SetKwData{z}{z}
-        \SetKwFunction{Return}{\sc Return}\SetKwFunction{Init}{\sc Initialize}\SetKwFunction{Adv}{\sc Advance}
-        \SetKwFunction{Up}{\sc Update}\SetKwFunction{Au}{\sc Augment}\SetKwFunction{BFS}{\sc BFS}\SetKwFunction{GT}{\sc goto}
-        \SetKwFunction{Re}{\sc Retreat}
-        \SetKwInOut{Input}{input}\SetKwInOut{Output}{output}
-     \Adv{$v$}
-     \BlankLine
-      \If {$v=t$}{
-        \Au{$P$}\;
-	    Remove saturated edges from $L_G$\;
-        $P\leftarrow \varnothing$\;
-	    \GT  \Adv{$s$}\;
-       }
-
-      \If{there exists edge $(v, w) \in L_G$}{
-	   Add edge $(v, w)$ to $P$\;
-	   \GT \Adv{$w$}\;
-       }
-       \Else{
-        \GT \Re{$v$}\;
-        }
-     \end{algorithm}
-	\end{column}
-	\end{columns}}
-\end{exampleblock}		
-	}
-
-%	%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%70
-	\frame{
-		\frametitle{Network flow: quiz 6}
-		How to compute the level graph $L_G$ efficiently?
-\begin{enumerate}
-	\item Depth-first search.
-	\item Breadth-first search.
-	\item Both A and B.
-	\item Neither A nor B.
-\end{enumerate}
-
-\vspace{5mm}\centerline{\includegraphics[width=\textwidth]{figures/p70}}
-	}
-
-%	%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%71
-	\frame{
-		\frametitle{Dinitz' algorithm: analysis}
-		\begin{lemma}
-			A phase can be implemented to run in \ccb{$O(m n)$}  time.
-		\end{lemma}
-    \pause
-
-	\ccm{\em Proof.}
 	\begin{itemize}
-		\item Initialization happens once per phase. \pause \ccpk{using BFS}\pause
-		\item At most \ccb{$m$} augmentations per phase. \pause \ccpk {$\longleftarrow O(mn)$  per phase}\\\pause
-		(because an augmentation deletes at least one edge from \ccb{$L_G$})\pause
-		\item At most \ccb{$n$} retreats per phase.  \pause \ccpk {$\longleftarrow O(m + n)$  per phase}\\ \pause
-		(because a retreat deletes one node from \ccb{$L_G$})\pause
-	   \item At most \ccb{$mn$} advances per phase.  \pause \ccpk{$\longleftarrow O(mn)$  per phase}\\\pause
-		(because at most \ccb{$n$} advances before retreat or augmentation)
+		\item it is a class of algorithms rather than a single specific algorithm, because it does not specify which unmarked item should be selected
+		\item It is cleared that any Marking Algorithm incurs more cache misses than $S_{FF}$
+		\item Missed occurs under 2 cases.
+			\begin{itemize}
+				\item case a : In the recent past, the request sequence has contained more than k distinct items
+				\item case b : In the recent past, the request sequence has come exclusively from a set of at most k items
+			\end{itemize}
+			In Case a, cache misses cannot be improved.
+
+			In Case b, a marking algorithm is possiable to lower the missed caused  and we can analayze the algorithm according to the baseline(optimal)
 	\end{itemize}
 }
-
-	\frame{
-		\frametitle{Dinitz' algorithm: analysis}
-
-
- \begin{theorem}[Dinitz 1970]
- Dinitz' algorithm runs in \ccb{$O(mn^2)$}  time.
- \end{theorem}\pause
-\ccm{\em Proof.}\pause
-\begin{itemize}
-	\item By Lemma, \ccb{$O(mn)$} time per phase.\pause
-	\item At most \ccb{$n-1$} phases \pause (as in shortest-augmenting-path analysis).
-\end{itemize}
-	}
-	
-	
-	
-	
-	
-	%%//////////////////////////////////////////////////////////////////////////////////////////////%%72
-	\frame{
-		\frametitle{Augmenting-path algorithms: summary}
-		\begin{table}\footnotesize
-			\renewcommand{\arraystretch}{2,5}%表格行与行的距离系数
-			\begin{tabular}{|c|c|c|c|}
-				\hline \rowcolor{lightgray}
-				year   &method& \# augmentations &running time \\
-				\hline
-				1955   & augmenting path & \ccb{$n C$} & \ccb{$O(m n C)$}  \\
-				\hline
-				1972  & fattest path &  \ccb{$m \log (m C)$} & \ccb{$O\left(m^{2} \log n \log (m C)\right)$}\\
-				\hline
-				1972  &capacity scaling & \ccb{$m \log C$}&  \ccb{$O\left(m^2 \log C\right)$}\\
-				\hline
-				1985	& improved capacity scaling &  \ccb{$m \log C$} & \ccb{$O(m n \log C)$}\\
-				\hline
-				1970	& shortest augmenting path & \ccb{$mn$} & \ccb{$O\left(m^{2} n\right)$} \\
-				\hline
-				1970	& level graph & \ccb{$mn$} &  \ccb{$O\left(m n^{2}\right)$}\\
-				\hline
-				1983  & dynamic trees & \ccb{$mn$} & \ccb{$ O(m n \log n)$}\\
-				\hline
-			\end{tabular} \\\vspace{4mm}
-			{\bfseries\footnotesize augmenting-path algorithms with \ccb{$m$} edges, \ccb{$n$} nodes, and integer capacities between \ccb{1} and \ccb{$C$}}
-		\end{table} 		
-	}
-	
-	
-	
-
-	%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%73
+%%//////////////////////////////////////////////////////////////////////////////////////////////%%58
 \frame{
-	\frametitle{Maximum-flow algorithms: theory highlights}
-	\begin{table}\scriptsize
-		\renewcommand{\arraystretch}{2.0}%表格行与行的距离系数
-		\begin{tabular}{|c|c|c|c|}
-			\hline \rowcolor{lightgray}
-			year   &method& worst case & discovered by\\
-			\hline
-			1951   & simplex & \ccb{$O\left(m n^{2} C\right)$} & Dantzig \\
-			\hline
-			1955  & augmenting paths &  \ccb{$O(m n C)$} & Ford–Fulkerson\\
-			\hline
-			1970 &shortest augmenting paths & \ccb{$O\left(m n^{2}\right)$} &Edmonds–Karp, Dinitz\\
-			\hline
-			1974	& blocking flows&  \ccb{$O\left(n^{3}\right)$} & Karzanov \\
-			\hline
-			1983	& dynamic trees & \ccb{$O(m n \log n)$} & Sleator–Tarjan\\
-			\hline
-			1985	& improved capacity scaling& \ccb{$O(m n \log C)$} &Gabow\\
-			\hline
-			1988  & push–relabel& \ccb{$O\left(m n \log \left(n^{2} / m\right)\right)$} & Goldberg–Tarjan\\
-			\hline
-			1998 & binary blocking flows & \ccb{$O\left(m^{3 / 2} \log \left(n^{2} / m\right) \log C\right)$} & Goldberg–Rao\\
-			\hline
-			2013 & compact networks & \ccb{$O(m n)$} &Orlin\\
-			\hline
-		   2014 & interior-point methods & \ccb{$\tilde{O}\left(m m^{1 / 2} \log C\right)$} & Lee–Sidford\\
-		   	\hline
-		   2016 & electrical flows & \ccb{$\tilde{O}\left(m^{10 / 7} C^{1 / 7}\right)$} &Madry\\
-		   	\hline
-		   20xx &  & ???&\\
-		   \hline		
-		\end{tabular} \\\vspace{4mm}
-		{\bfseries\footnotesize augmenting-path algorithms with \ccb{$m$} edges, \ccb{$n$} nodes, and integer capacities between \ccb{1} and \ccb{$C$}}
-	\end{table} 		
+	\frametitle{Analysis of Marking Algorithms}
+	\ccp{Marking Algorithms}
+	\begin{definition}
+		$f(\delta)$ to denote the minimum number of misses it is possible to make on sequence $\delta$.
+		$f(\delta)$ is the number of misses achieved by the optimal Farthest-in-Future policy.
+	\end{definition}
+}
+%%//////////////////////////////////////////////////////////////////////////////////////////////%%58
+\frame{
+	\frametitle{Analysis of Marking Algorithms}
+	\ccp{Marking Algorithms}
+	\begin{claim}
+		In each phase, $\delta$ contains accesses to exactly k distinct items.
+		The subsequent phase begins with an access to a different $(k + 1)^{st}$ item.
+	  \end{claim}
+	  
+	  \begin{proof}
+		This claim can be proved by pigeonhole principle. As we have only k unmarked slot for k different item, 
+		there is no extra unmarked slot for the $(k+1)^{st}$ item, and thus the subsequent phase begins with the $(k+1)^{st}$ item.
+	  \end{proof}
+}
+%%//////////////////////////////////////////////////////////////////////////////////////////////%%58
+\frame{
+	\frametitle{Analysis of Marking Algorithms}
+	\ccp{Marking Algorithms}
+	\begin{claim} 
+		The marking algorithm incurs at most k misses per phase, for a total of at most kr misses over all r phases.
+	\end{claim}
+	  
+	\begin{proof}
+		As the subsequent phase begins with an access to a different $(k + 1)^{st}$ item, there  musy exactly be different k items being 
+		accessed during the phase.  Hence the algorithm incures at most k misses per phase, for a total of at most kr misses over all r phases.
+	\end{proof}
+}
+%%//////////////////////////////////////////////////////////////////////////////////////////////%%58
+\frame{
+	\frametitle{Analysis of Marking Algorithms}
+	\ccp{Marking Algorithms}
+	\begin{claim} 
+		The optimum incurs at least r−1 misses. In other words, $f(\delta) \geq {r-1} $
+	  \end{claim}
+	  
+	  \begin{proof}
+		Consider any phase but the first one and look at the situation when the first item is accessed in any new phase. 
+		The first request must cause a miss, otherwise the new phase will not begin. However, the first phase may not cause any miss 
+		if all items accessed in phase one have been already in the cache after phase 0. 
+		As a result any algorithm incurs at least r−1 misses and  $f(\delta) \geq {r-1}$.
+	  
+		Then Consider the tight case. Let us look at the situation just after the first access in any phase but the first one. 
+		Algorithm above shows that the remainder of the phase will involve accesses to k − 1 other distinct items.
+		If those  k − 1 other distinct items have already been in the cache when the last phase is over, 
+		then the optimum incurs exactly r − 1 misses.
+	  \end{proof}
+}
+%%//////////////////////////////////////////////////////////////////////////////////////////////%%58
+\frame{
+	\frametitle{Analysis of Marking Algorithms}
+	\ccp{Marking Algorithms}
+	\begin{theorem}
+		For any marking algorithm, the number of misses it incurs on any sequence $\delta$ is at most $k·f(\delta)+k$.
+	\end{theorem}
+	  
+	\begin{proof}
+		This can be proved with the help of Claim above.
+		$kr = k(r-1)+r \leq k·f(\delta)+k$
+	\end{proof}
+}
+%%//////////////////////////////////////////////////////////////////////////////////////////////%%58
+\section{Least-Recently-Used Algorithm}
+%%//////////////////////////////////////////////////////////////////////////////////////////////%%58
+\frame{
+	\frametitle{LRU Algorithm}
+	\ccp{LRU Algorithms}
+	\begin{itemize}
+		\item LRU Algorithm is a kind of Marking Algorithm
+		\item LRU Algorithm is likely to reach the worst case
+	\end{itemize}
+}	
+%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%73
+\frame{
+	\frametitle{LRU Algorithm}
+	\begin{exampleblock}{}
+		\begin{algorithm}[H]
+			\SetKwData{x}{x}\SetKwData{y}{y}\SetKwData{z}{z}
+			\SetKwFunction{CS}{\sc LRU }\SetKwFunction{Return}{\sc Return}\SetKwFunction{Init}{\sc Initialize}
+			\SetKwFunction{Up}{\sc Update}\SetKwFunction{Au}{\sc Augment}\SetKwFunction{BFS}{\sc BFS}
+			\SetKwInOut{Input}{input}\SetKwInOut{Output}{output}
+		\CS{Sequence}
+		\BlankLine
+		Unmark all items
+
+		\For{each item $s \in Sequence$}{
+			
+			Mark s
+
+			\If{$s$ is not in cache}{
+				evict nothing
+			}\Else{
+				\If{all items currently in the cache are marked}{
+					Declare the phase over
+
+					Processing of s is deferred to start of next phase
+				}\Else{
+					\ccr{Evict the least recently used item}
+				}
+			}
+		}
+		\end{algorithm}
+		\end{exampleblock}
+}
+%%//////////////////////////////////////////////////////////////////////////////////////////////%%58
+\frame{
+	\frametitle{LRU Algorithm}
+	\ccp{LRU Algorithms}
+	\begin{claim}
+		LRU algorithm is a Marking Algorithm.
+	\end{claim}
+	\begin{proof}
+		At any point in a phase, if there are any unmarked items in the cache, 
+		then the least recently used item must be unmarked.
+		Hence, LRU is a marking algorithm.
+	\end{proof}
+}		
+%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%73
+\frame{
+	\frametitle{LRU Algorithm}
+	\ccp{LRU Algorithms}
+	\begin{example} 
+		  There is a request sequence in which k + 1 items are repeatedly requested in a round-robin fashion and 
+		our cache have k slot to store items.
+	\end{example}
+	\vspace{2mm}\centerline{\includegraphics[width=0.6\textwidth]{wsw-pic/worstcase.png}}
+
+	In this example, \ccp{LRU} will evict the item which will be requested in the next step, as a result, misses are incurred on each access.
+	
+	The \ccp{Farthest-in-Future Algorithm} evcit the item that will be requested farthest in the future,
+	and thus the optimal policy incurs only one miss in every k steps. 
+	
+	So LRU have the worst performance($kf(\delta)$) in this workload.
+}
+%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%73
+\frame{
+	\frametitle{LRU Algorithm}
+	\begin{example} 
+		  There is a request sequence in which k + 1 items are repeatedly requested in a round-robin fashion and 
+		our cache have k slot to store items.
+	\end{example}
+	\ccp{LRU Algorithms}
+	\vspace{10mm}
+	\centerline{\includegraphics[width=0.6\textwidth]{wsw-pic/lru.png}}
+}
+%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%73
+\frame{
+	\frametitle{LRU Algorithm}
+	\begin{example}  
+		  There is a request sequence in which k + 1 items are repeatedly requested in a round-robin fashion and 
+		our cache have k slot to store items.
+	\end{example}
+	\ccp{Farthest-in-Future Algorithm}
+	\vspace{10mm}
+	\centerline{\includegraphics[width=0.6\textwidth]{wsw-pic/sffw.png}}
+}			
+%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%73
+\section{Random Marking Algorithms}
+%%//////////////////////////////////////////////////////////////////////////////////////////////%%58
+\frame{
+	\frametitle{Random Marking Algorithms}
+	\begin{exampleblock}{}
+		\begin{algorithm}[H]
+			\SetKwData{x}{x}\SetKwData{y}{y}\SetKwData{z}{z}
+			\SetKwFunction{CS}{\sc LRU }\SetKwFunction{Return}{\sc Return}\SetKwFunction{Init}{\sc Initialize}
+			\SetKwFunction{Up}{\sc Update}\SetKwFunction{Au}{\sc Augment}\SetKwFunction{BFS}{\sc BFS}
+			\SetKwInOut{Input}{input}\SetKwInOut{Output}{output}
+		\CS{Sequence}
+		\BlankLine
+		Unmark all items
+
+		\For{each item $s \in Sequence$}{
+			
+			Mark s
+
+			\If{$s$ is not in cache}{
+				evict nothing
+			}\Else{
+				\If{all items currently in the cache are marked}{
+					Declare the phase over
+
+					Processing of s is deferred to start of next phase
+				}\Else{
+					\ccr{Evict an unmarked item chosen uniformly at random from the cache}
+				}
+			}
+		}
+		\end{algorithm}
+		\end{exampleblock}
+}	
+%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%73
+\frame{
+	\frametitle{Random Marking Algorithms}
+	\begin{definition}
+		The phase begins with all items unmarked, and it contains accesses to \ccp{k} distinct items.
+		Each of these items goes from unmarked to marked the first time it is accessed.
+		The unmarked items in the middle of a phase are classfied into two further categories:
+		\begin{enumerate}
+		  \item fresh : an unmarked item was not marked in the previous phase.
+		  \item stale : an unmarked item was marked in the previous phase.
+		\end{enumerate}
+	  
+		Among these \ccp{k} accesses to unmarked items in phase \ccp{j}, 
+		let \ccp{$c_j$} denote the number of these that are to fresh items.
+	\end{definition}
+}
+%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%73
+\frame{
+	\frametitle{Random Marking Algorithms}
+	\begin{claim}
+		$f(\delta) \geq \frac{1}{2} \sum_{j=1}^r c_j$
+	  \end{claim}
+	  
+	  \begin{proof}
+		Let $f_j(\delta)$ denote the number of misses incurred by the optimal algorithm in phase j.
+		Then we have $f(\delta) = \sum_{j=1}^r f_j(\delta)$.
+		It is clear that in any phase j , k different items is requested.
+		By the definition of fresh, there are at least $k+c_{j+1}$ distinct items requested bwtween phase j and phase j+1.
+		Thus, even the optimal schedule will have at least $c_{j+1}$ misses in phase j+1, 
+		as a result we have 
+		\begin{itemize}
+		  \item  $f_j(\delta)+f_{j+1}(\delta) \geq c_{j+1}$
+		  \item  $\sum_{j=0}^{r-1}(f_j(\delta)+f_{j+1}(\delta)) \geq \sum_{j=0}^{r-1} c_{j+1}$
+		  \item  $2\sum_{j=1}^{r}f_j(\delta) = 2f(\delta) \geq \sum_{j=0}^{r-1}(f_j(\delta)+f_{j+1}(\delta)) \geq \sum_{j=1}^{r} c_{j}$
+		  \item  $f(\delta) \geq \frac{1}{2} \sum_{j=1}^r c_j$
+		\end{itemize}
+	\end{proof}
+}
+%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%73
+\frame{
+	\frametitle{Random Marking Algorithms}
+	\begin{definition}
+		Let H(n) be the harmonic function
+		$H(n) = \sum_{i=1}^{n} \frac{1}{i} $
+	\end{definition}
+	  
+	\begin{lemma}
+
+		$H(n) = O(\log n)$
+	\end{lemma}
+	  
+	\begin{proof} 
+	H(n) is naturally bounded above $1+\int_1 ^n \frac{1}{x} dx = 1 + \ln n$
+
+	H(n) is naturally bounded below $1+\int_1 ^{n+1} \frac{1}{x} dx = \ln (n+1)$
+
+	Hence, we can have $H(n) = O(\log n)$
+	\end{proof}
+}	
+%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%73
+\frame{
+	\frametitle{Random Marking Algorithms}
+	\begin{definition} 
+		Let $M_\delta$ denote the random variable equal to the number of cache misses incurred 
+		by the Randomized Marking Algorithm on the request sequence $\delta$.
+	\end{definition}
+	  
+	  
+	\begin{claim}
+		For every request sequence $\delta$, we have $E(M_\delta) \leq H(k) \sum_{r}^{j=1} c_j$
+	\end{claim}
+}	
+
+%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%73
+\frame{
+	\frametitle{Random Marking Algorithms}
+	\begin{proof}
+		As $c_j$ denote the the number of requests in phase j to fresh items, 
+		there must be $k-c_j$ requests in phase j to unmarked stale items.
+		\BlankLine
+		We suppose the $i^{th}$ request to a stale item s and there have been c($c \leq c_j$) requests to fresh items.
+		there are k − i + 1 items overall that are still stale and c items that are stale but evcited earlier.
+		Thus, so s is not in the cache at this moment with probability $\frac{c}{k-i+1} \leq \frac{c}{k-i+1}$
+		\BlankLine
+		Let $X_j$ denote the number of misses incurred by the Randomized Marking
+		Algorithm in phase j.
+		\BlankLine
+		\begin{itemize}
+		  \item $E[X_j] \leq c_j + \sum_{i=1}^{k-c_j}\frac{c}{k-i+1} \leq c_j(1+\sum_{l=c_j+1}^{k}\frac{1}{l}) = c_j(1+H(k)-H(c_j)) \leq c_jH(k)$
+		  \item $E[M_\delta] = \sum_{j=1}^{r}E[X_j] \leq H(k)\sum_{j=1}^{r}c_j$
+		\end{itemize}
+	  \end{proof}
+}	
+
+%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%73
+\frame{
+	\frametitle{Random Marking Algorithms}
+	\ccr{Random Marking Algorithms}
+
+
+	We can conclude that the expected number of misses incurred by the Randomized Marking Algorithm 
+	is at most $2H(k)·f(\delta) = O(\log k)·f(\delta)$.		
+}	
+
+\frame{
+	\frametitle{Conclusion}
+	\ccr{Conclusion}
+	\begin{itemize}
+		\item  Introduce a marking Algorithm and analysis its performance
+		\item  Introduce the LRU schedule and its misses can be($kf(\delta)$) on some workloads.  
+		\item  Introduce the Random Marking Algorithms schedule and its misses is expected to be $O(\log k)·f(\delta)$ on every workloads
+	\end{itemize}	
+	
+}
+%%	%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%74
+\section{Thank you}
+%%	%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%74
+\frame{
+	\frametitle{Conclusion}
+	\ccr{references}
+
+	\cite{algo-design}
+	\cite{comp}
+	\cite{cse202}
+	\cite{harm}
+	\cite{lru}
+	\cite{notecse}
+	\cite{roa}
 }
 
-
-%%	%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%74
-%	  \frame{
-%		\frametitle{Maximum-flow algorithms: practice}
-%		
-%		\cco{Push–relabel algorithm (Section 7.4)}. [Goldberg–Tarjan 1988]\\
-%		Increases flow one edge at a time instead of one augmenting path at a time.
-%		
-%		\vspace{3mm}\centerline{\includegraphics[width=0.8\textwidth]{figures/p74}}
-%	}
-%
-%%	%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%75
-%\frame{
-%	\frametitle{Maximum-flow algorithms: practice}
-%	
-%\cco{Caveat.}  Worst-case running time is generally not useful for predicting or comparing max-flow algorithm performance in practice.
-%
-%
-%\cco{Best in practice.} Push–relabel method with gap relabeling: \ccb{$O(m^{3/2})$}  in practice.\vspace{6mm}
-%	
-%\vspace{5mm}\centerline{\includegraphics[width=\textwidth]{figures/p75}}
-%}
-%%	%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%76
-%\frame{
-%	\frametitle{Maximum-flow algorithms: practice}
-%	
-%\cco{Computer vision.}  Different algorithms work better for some dense problems that arise in applications to computer vision.
-%
-%	\vspace{6mm}\centerline{\includegraphics[width=\textwidth]{figures/p76}}
-%}
-%%	%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%77
-%
-%   \frame{
-%	\frametitle{Maximum-flow algorithms: Matlab}
-%	\vspace{3mm}\centerline{\includegraphics[width=\textwidth]{figures/p77}}
-%
-%}
-%%	%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%78
-%
-%	  \frame{
-%		\frametitle{Maximum-flow algorithms: Google}
-%		
-%		\vspace{3mm}\centerline{\includegraphics[width=\textwidth]{figures/p78}}
-%		
-%}
-%
-%\section{Simple Unit-Capacity Networks}
-%
-%%	%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%80
-%	
-%	
-%	\frame{
-%		\frametitle{Network flow: quiz 7}
-%	Which max-flow algorithm to use for bipartite matching?
-%	\begin{enumerate}
-%		\item Ford–Fulkerson: \ccb{$O(m n C)$}.
-%		\item Capacity scaling: \ccb{$O\left(m^{2} \log C\right)$}.
-%		\item Shortest augmenting path: \ccb{$O\left(m^{2} n\right)$}.
-%		\item Dinitz' algorithm: \ccb{$O\left(m n^{2}\right)$}.
-%	\end{enumerate}
-%	}
-%
-%%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%81
-%
-%	\frame{
-%     \frametitle{Simple unit-capacity networks}
-%    \begin{definition}
-%    A  flow network is a \ccp{simple unit-capacity network} if:
-%    \begin{itemize}
-%	\item Every edge has capacity \ccb{1}.
-%	\item Every node (other than \ccb{$s$} or \ccb{$t$}) has exactly one entering edge,\\
-%	or exactly one leaving edge, or both.
-%    \end{itemize}
-%    \end{definition}\vspace{-3mm}
-%
-%    }
-%
-%%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%81
-%
-%	\frame{
-%     \frametitle{Simple unit-capacity networks}
-%       \cco{Property.}  Let \ccb{$G$} be a simple unit-capacity network and let \ccb{$f$} be a 0–1 flow. Then, residual network \ccb{$G_f$} is also a simple unit-capacity network.\pause
-%
-%
-%    \ccc{Exercise.}  Bipartite matching.\pause
-%
-%    \vspace{3mm}\centerline{\includegraphics[width=0.8\textwidth,height=4cm]{figures/p81}}
-%	}
-%	
-%%	%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%82
-%	\frame{
-%		\frametitle{Simple unit-capacity networks}
-%\cco{Shortest-augmenting-path algorithm.}\vspace{-3mm}
-%\begin{itemize}
-%	\item \ccp{Normal augmentation}: length of shortest path does not change.
-%	\item \ccp{Special augmentation}: length of shortest path strictly increases.
-%\end{itemize}\vspace{-3mm}
-%	\begin{theorem}[Even–Tarjan 1975]
-%	In simple unit-capacity networks, Dinitz'algorithm computes a maximum flow in \ccb{$O(m n^{1/2})$} time.
-%	\end{theorem}\pause
-%
-%\ccm{\em Proof.}\pause
-%\begin{itemize}
-%	\item  \ccc{Lemma 1.} Each phase of normal augmentations takes \ccb{$O(m)$} time.
-%	\item  \ccc{Lemma 2.} After \ccb{$n^{1/2}$} phases, \ccb{${val}(f) \geq {val}\left(f^{*}\right)-n^{1 / 2}$}.
-%	\item  \ccc{Lemma 3.}  After \ccb{$\leq n^{1/2}$} additional augmentations, flow is optimal.
-%\end{itemize}
-%}
-%
-%%	%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%82
-%	\frame{
-%		\frametitle{Simple unit-capacity networks}
-%
-%     \begin{block}{Lemma 3}
-%    	After \ccb{$\leq n^{1/2}$}  additional augmentations, flow is optimal.
-%	 \end{block}\pause
-%
-%     \ccm{\em Proof.} Each augmentation increases flow value by at least 1.
-%
-%    }
-%
-%%	%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%83
-%	
-%	\frame{
-%		\frametitle{Simple unit-capacity networks}
-%\ccp{Phase of normal augmentations.}%\Ccr{$\Longleftarrow\Begin{Array}{L}{\Tiny\Text { Within A Phase, Length Of Shortest}} \\[-2Mm] {\Tiny\Text { Augmenting Path Does Not Change }}\End{Array}$}
-%  \begin{itemize}\vspace{-3mm}
-%	\item 	Construct level graph \ccb{$L_G$}.
-%\ccg{	\item  Start at $s$, advance along an edge in $L_G$ until reach $t$ or get stuck.
-%	\item  If reach $t$, augment flow; update $L_G$; and restart from $s$.
-%	\item If get stuck, delete node from $L_G$ and go to previous node.}
-%\end{itemize}
-%
-%\vspace{5mm}\centerline{\includegraphics[width=.8\textwidth]{figures/p83}}
-%	}
-%
-%
-%%	%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%84
-%
-%\frame{
-%	\frametitle{Simple unit-capacity networks}
-%	\ccp{Phase of normal augmentations.}
-%	\begin{itemize}\vspace{-3mm}
-%		\ccg{	\item 	Construct level graph $L_G$}.
-%	\item  Start at \ccb{$s$}, advance along an edge in \ccb{$L_G$} until reach \ccb{$t$} or get stuck.
-%		\ccg{	\item  If reach $t$, augment flow; update $L_G$; and restart from $s$.
-%		\item If get stuck, delete node from $L_G$ and go to previous node.}
-%	\end{itemize}
-%	
-%	\vspace{5mm}\centerline{\includegraphics[width=0.8\textwidth]{figures/p84}}
-%}
-%
-%
-%
-%%	%%
-%%	%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%85
-%   \frame{
-%	\frametitle{Simple unit-capacity networks}
-%	\ccp{Phase of normal augmentations.}
-%	\begin{itemize}\vspace{-3mm}
-%		\ccg{	\item 	Construct level graph $L_G$.
-%		\item  Start at $s$, advance along an edge in $L_G$ until reach $t$ or get stuck.}
-%		\item  If reach \ccb{$t$}, augment flow; update \ccb{$L_G$}; and restart from \ccb{$s$}.
-%		\ccg{		\item If get stuck, delete node from $L_G$ and go to previous node.}
-%	\end{itemize}
-%	\vspace{5mm}\centerline{\includegraphics[width=0.8\textwidth]{figures/p85}}
-%	
-%}
-%%	%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%86
-%
-%\frame{
-%	\frametitle{Simple unit-capacity networks}
-%	\ccp{Phase of normal augmentations.}
-%	\begin{itemize}\vspace{-3mm}
-%		\ccg{	\item 	Construct level graph $L_G$}.
-%		\item  Start at \ccb{$s$}, advance along an edge in \ccb{$L_G$} until reach \ccb{$t$} or get stuck.
-%		\ccg{	\item  If reach $t$, augment flow; update $L_G$; and restart from $s$.
-%			\item If get stuck, delete node from $L_G$ and go to previous node.}
-%	\end{itemize}
-%	
-%	\vspace{5mm}\centerline{\includegraphics[width=0.8\textwidth]{figures/p86}}
-%}
-%
-%
-%%	%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%87
-%
-%\frame{
-%	\frametitle{Simple unit-capacity networks}
-%	\ccp{Phase of normal augmentations.}
-%	\begin{itemize}\vspace{-3mm}
-%		\ccg{	\item 	Construct level graph $L_G$.
-%		\item  Start at $s$, advance along an edge in $L_G$ until reach $t$ or get stuck.
-%		\item  If reach $t$, augment flow; update $L_G$; and restart from $s$.}
-%			\item If get stuck, delete node from \ccb{$L_G$} and go to previous node.
-%	\end{itemize}
-%	
-%	\vspace{5mm}\centerline{\includegraphics[width=0.8\textwidth]{figures/p87}}
-%}
-%
-%%	%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%88
-%
-%\frame{
-%	\frametitle{Simple unit-capacity networks}
-%	\ccp{Phase of normal augmentations.}
-%	\begin{itemize}\vspace{-3mm}
-%		\ccg{	\item 	Construct level graph $L_G$.}
-%			\item  Start at \ccb{$s$}, advance along an edge in \ccb{$L_G$} until reach \ccb{$t$} or get stuck.
-%		\ccg{	\item  If reach $t$, augment flow; update $L_G$; and restart from $s$.
-%		\item If get stuck, delete node from $L_G$ and go to previous node.}
-%	\end{itemize}
-%	
-%	\vspace{5mm}\centerline{\includegraphics[width=0.8\textwidth]{figures/p88}}
-%}
-%
-%%	%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%89
-%
-%\frame{
-%	\frametitle{Simple unit-capacity networks}
-%	\ccp{Phase of normal augmentations.}
-%	\begin{itemize}\vspace{-3mm}
-%		\ccg{	\item 	Construct level graph $L_G$.
-%		\item  Start at $s$, advance along an edge in $L_G$ until reach $t$ or get stuck.}
-%	\item  If reach \ccb{$t$}, augment flow; update \ccb{$L_G$}; and restart from \ccb{$s$}.
-%			\ccg{		\item If get stuck, delete node from $L_G$ and go to previous node.}
-%	\end{itemize}
-%	
-%	\vspace{5mm}\centerline{\includegraphics[width=0.8\textwidth]{figures/p89}}
-%}
-%
-%
-%%	%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%90
-%
-%\frame{
-%	\frametitle{Simple unit-capacity networks}
-%	\ccp{Phase of normal augmentations.}
-%	\begin{itemize}\vspace{-3mm}
-%		\item 	Construct level graph \ccb{$L_G$}.
-%			\item  Start at \ccb{$s$}, advance along an edge in \ccb{$L_G$} until reach \ccb{$t$} or get stuck.
-%		\item  If reach \ccb{$t$}, augment flow; update \ccb{$L_G$}; and restart from \ccb{$s$}.
-%		\item If get stuck, delete node from \ccb{$L_G$} and go to previous node.
-%	\end{itemize}
-%	
-%	\vspace{7mm}\centerline{\includegraphics[width=.8\textwidth]{figures/p90}}
-%}
-%
-%%	%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%91
-%
-%\frame{
-%	\frametitle{Simple unit-capacity networks}
-%	\ccp{Phase of normal augmentations.}
-%	\begin{itemize}\vspace{-3mm}
-%		\item 	Construct level graph \ccb{$L_G$}.
-%			\item  Start at \ccb{$s$}, advance along an edge in \ccb{$L_G$} until reach \ccb{$t$} or get stuck.
-%		\item  If reach \ccb{$t$}, augment flow; update \ccb{$L_G$}; and restart from \ccb{$s$}.
-%		\item If get stuck, delete node from \ccb{$L_G$} and go to previous node.
-%	\end{itemize}
-%
-%
-%\begin{block}{Lemma 1}
-%	 A phase of normal augmentations takes \ccb{$O(m)$} time.
-% \end{block}\pause
-%
-%\ccm{\em Proof.}\vspace{-3mm}
-%\begin{itemize}
-%	\item \ccb{$O(m)$} to create level graph \ccb{$L_G$}.
-%	\item \ccb{$O(1)$} per edge (each edge involved in at most one advance, retreat, and\\
-%	augmentation).
-%	\item \ccb{$O(1)$} per node (each node deleted at most once)
-%\end{itemize}
-%	
-%}
-%%	%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%92
-%
-%\frame{
-%	\frametitle{Network flow: quiz 8}
-%	Consider running advance–retreat algorithm in a unit-capacity network (but not necessarily a simple one). What is running time?\\
-%\pause	\hspace{3cm}\ccr{ $ \begin{array}{l}
-%		\nwarrow\\[-2mm]
-%		\tiny\text{both indegree and outdegree}\\[-2mm]
-%		\tiny\text{of a node can be larger than 1}
-%		\end{array} $}
-%\begin{enumerate}
-%	\item \ccb{$O(m)$}.
-%	\item \ccb{$O\left(m^{3 / 2}\right)$}.
-%	\item \ccb{$O(m n)$}.
-%	\item May not terminate.
-%\end{enumerate}
-%	
-%}
-%
-%%	%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%93
-%\frame{
-%	\frametitle{Computational geometry applications}
-%
-%	\begin{block}{Lemma 2}
-%	After \ccb{$n^{1/2}$} phases, \ccb{$val( f ) \geq val( f^*) -n^{1/2}$}.
-%		\end{block}\pause
-%\ccm{\em Proof.}\pause
-%	\begin{itemize}\vspace{-3mm}
-%        \item After \ccb{$n^{1/2}$} phases, length of shortest augmenting path is \ccb{$>n^{1/2}$}.\pause
-%		\item Thus, level graph has \ccb{$\geq n^{1/2}$} levels (not including levels for \ccb{$s$} or \ccb{$t$})\pause
-%		\item Let \ccb{$1 \leq h \leq n^{1 / 2}$} be a level with min number of nodes \ccc{$\Rightarrow$} \ccb{$\left|V_{h}\right| \leq n^{1 / 2}$}.\pause
-%	\end{itemize}
-%\vspace{5mm}\centerline{\includegraphics[width=0.8\textwidth]{figures/p93}}
-%}
-%
-%
-%%	%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%94
-%	\frame{
-%		\vspace{3mm}
-%		\frametitle{Computational geometry applications}
-%	\begin{block}{Lemma 2}
-%	After \ccb{$n^{1/2}$} phases, \ccb{$val( f ) \geq val( f^*) -n^{1/2}$}.
-%		\end{block}\vspace{-1em}
-%\ccm{\em Proof.}
-%	\begin{itemize}\vspace{-3mm}
-%		\item After \ccb{$n^{1/2}$} phases, length of shortest augmenting path is \ccb{$>n^{1/2}$}.
-%		\item Thus, level graph has \ccb{$\geq n^{1/2}$} levels (not including levels for \ccb{$s$} or \ccb{$t$})
-%		\item Let \ccb{$1 \leq h \leq n^{1 / 2}$} be a level with min number of nodes \ccc{$\Rightarrow$} \ccb{$\left|V_{h}\right| \leq n^{1 / 2}$}.
-%		\item Let \ccb{$A=\{v : \ell(v)<h\} \cup\{v : \ell(v)=h \text { and } v \text { has } \leq 1 $  outgoing residual edge\}} .
-%		\item \ccb{$\operatorname{cap}_{f}(A, B) \leq\left|V_{h}\right| \leq n^{1 / 2} \Rightarrow \operatorname{val}(f) \geq \operatorname{val}\left(f^{*}\right)-n^{1 / 2}$}
-%	\end{itemize}
-%     \centerline{\includegraphics[width=0.8\textwidth]{figures/p94}}
-%	}
-%%	%%%%//////////////////////////////////////////////////////////////////////////////////////////////%%95
-%\frame{
-%\frametitle{Simple unit-capacity networks: review
-%}
-%\begin{theorem} [Even–Tarjan 1975]
-%	In simple unit-capacity networks, Dinitz' algorithm computes a maximum flow in \ccb{$O(m n^{1/2})$} time.
-%	
-%\end{theorem}
-%	\ccm{\em Proof.}
-%	\begin{itemize}\vspace{-3mm}
-%		\item Lemma 1. Each phase take \ccb{$O(m)$} time.
-%		\item Lemma 2. After \ccb{$n^{1/2}$} phase, \ccb{$\operatorname{val}(f) \geq \operatorname{val}\left(f^{\prime}\right)-n^{1 / 2}$}
-%		\item Lemma 3. After \ccb{$\leq n^{1/2}$} additional augmentations
-%	\end{itemize}\pause
-%
-%\begin{corollary}
-%	Dinitz' algorithm computes \ccp{max-cardinality bipartite matching} in \ccb{$O(m n^{1/2})$} time.
-%\end{corollary}
-%}	
-\cite{algo-design}
 \bibliographystyle{alpha}
-
 \bibliography{netflow}
 \end{document}
